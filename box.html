@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('box',{
+        category: '3D',
+        color: '#D8BFD8',
+        defaults: {
+            scene: {value:"", type:"scene"},    
+            name: {value:""}
+        },
+        inputs:1,
+        icon: "babylon.png",
+        label: function() {
+            return this.name||"box";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="box">
+
+    <div class="form-row">
+        <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
+        <input type="select" id="node-input-scene" placeholder="Scene"/>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="box">
+    <p>Create a primitive box object</p>
+</script>

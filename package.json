@@ -1,0 +1,14 @@
+{
+  "name": "node-red-contrib-web-babylonjs",
+  "node-red": {
+    "nodes": {
+      "sphere": "sphere.js",
+      "box": "box.js",
+      "scene": "scene.js"
+    }
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "path": "^0.12.7"
+  }
+}
