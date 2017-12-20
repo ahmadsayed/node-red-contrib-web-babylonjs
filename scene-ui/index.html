@@ -46,7 +46,7 @@
                         var sphere = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                         break;
                     case 'box':
-                        var box = BABYLON.MeshBuilder.CreateBox(element.name, {height :  2}, scene);
+                        var box = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                         break;
                 }
             });

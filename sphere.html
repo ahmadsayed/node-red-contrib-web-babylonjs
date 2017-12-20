@@ -4,16 +4,16 @@
         color: '#D8BFD8',
         defaults: {
             scene: { value: "", type: "scene", required: true },
-            name: { value: "", required: true },
-            segments: { value: 32 ,validate:RED.validators.number()},
-            diameter: { value: 1 ,validate:RED.validators.number()},
-            diameterX: {},
-            diameterY: {},
-            diameterZ: {},
-            arc: { value: 1,validate:RED.validators.number() },
-            slice: { value: 1,validate:RED.validators.number() },
-            updatable: { value: false },
-            sideOrientation: { value: "DEFAULTSIDE" }
+            name_conf_a: { value: "", required: true },
+            segments_conf_n: { value: 32 ,validate:RED.validators.number()},
+            diameter_conf_n: { value: 1 ,validate:RED.validators.number()},
+            diameterX_conf_n: {},
+            diameterY_conf_n: {},
+            diameterZ_conf_n: {},
+            arc_conf_n: { value: 1,validate:RED.validators.number() },
+            slice_conf_n: { value: 1,validate:RED.validators.number() },
+            updatable_conf_b: { value: false },
+            sideOrientation_conf_a: { value: "DEFAULTSIDE" }
         },
         inputs: 1,
         icon: "babylon.png",
@@ -29,45 +29,45 @@
         <input type="select" id="node-input-scene" placeholder="Scene"/>
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name"/>
+        <label for="node-input-name_conf_a"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name_conf_a" placeholder="Name"/>
     </div>
     <div class="form-row">
-        <label for="node-input-diameter"><i class="icon-tag"></i> Diameter</label>
-        <input type="number" id="node-input-diameter"/>
+        <label for="node-input-diameter_conf_n"><i class="icon-tag"></i> Diameter</label>
+        <input type="text" id="node-input-diameter_conf_n"/>
     </div>        
     <div class="form-row">
         <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-updatable" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-updatable" style="width:70%;">Updatable</label>
+        <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
     </div>
     <div class="form-row">
-        <label for="node-input-segments"><i class="icon-tag"></i> Segments</label>
-        <input type="text" id="node-input-segments"/>
+        <label for="node-input-segments_conf_n"><i class="icon-tag"></i> Segments</label>
+        <input type="text" id="node-input-segments_conf_n"/>
     </div>    
     <div class="form-row">
-        <label for="node-input-diameterX"><i class="icon-tag"></i> DiameterX</label>
-        <input type="text" id="node-input-diameterX">
+        <label for="node-input-diameterX_conf_n"><i class="icon-tag"></i> DiameterX</label>
+        <input type="text" id="node-input-diameterX_conf_n">
     </div>
     <div class="form-row">
-        <label for="node-input-diameterY"><i class="icon-tag"></i> DiameterY</label>
-        <input type="text" id="node-input-diameterY">
+        <label for="node-input-diameterY_conf_n"><i class="icon-tag"></i> DiameterY</label>
+        <input type="text" id="node-input-diameterY_conf_n">
     </div>
     <div class="form-row">
-        <label for="node-input-diameterZ"><i class="icon-tag"></i> DiameterZ</label>
-        <input type="text" id="node-input-diameterZ">
+        <label for="node-input-diameterZ_conf_n"><i class="icon-tag"></i> DiameterZ</label>
+        <input type="text" id="node-input-diameterZ_conf_n">
     </div>            
     <div class="form-row">
-        <label for="node-input-arc"><i class="icon-tag"></i> Arc</label>
-        <input type="text" id="node-input-arc">
+        <label for="node-input-arc_conf_n"><i class="icon-tag"></i> Arc</label>
+        <input type="text" id="node-input-arc_conf_n">
     </div>            
     <div class="form-row">
-        <label for="node-input-slice"><i class="icon-tag"></i> Slice</label>
-        <input type="text" id="node-input-slice">
+        <label for="node-input-slice_conf_n"><i class="icon-tag"></i> Slice</label>
+        <input type="text" id="node-input-slice_conf_n">
     </div>            
     <div class="form-row">
-        <label for="node-input-sideOrientation"><i class="icon-tag"></i> SideOrientation</label>
-        <input type="text" id="node-input-sideOrientation">
+        <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
+        <input type="text" id="node-input-sideOrientation_conf_a">
     </div>
 
 </script>

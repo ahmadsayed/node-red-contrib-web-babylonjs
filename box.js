@@ -1,15 +1,15 @@
 module.exports = function(RED) {
-
-    function BoxNode(config) {
+    var util = require('./util');
+    var componentType = 'box';
+    function SphereNode(config) {
         RED.nodes.createNode(this,config);
-        var node = this;
         this.scene = RED.nodes.getNode(config.scene);
-        console.log(config.name);
-        this.scene.sceneObjects.push({'type' : 'box', 'name' : config.name});
+        this.scene.context().get("object").push({'type' : componentType , 'name': config.name, 'param':util.getParameters(config)});
+        var node = this;
         node.on('input', function(msg) {
             msg.payload = msg.payload.toLowerCase();
-//          node.send(msg);
         });
     }
-    RED.nodes.registerType("box",BoxNode);
+
+    RED.nodes.registerType(componentType,SphereNode);
 }

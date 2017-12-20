@@ -4,7 +4,13 @@
         color: '#D8BFD8',
         defaults: {
             scene: {value:"", type:"scene"},    
-            name: {value:""}
+            name_conf_a: { value: "", required: true },
+            size_conf_n: { value: 1 ,validate:RED.validators.number()},
+            height_conf_n: {},
+            width_conf_n: {},
+            depth_conf_n: {},
+            updatable_conf_b: { value: false },
+            sideOrientation_conf_a: { value: "DEFAULTSIDE" }
         },
         inputs:1,
         icon: "babylon.png",
@@ -15,16 +21,39 @@
 </script>
 
 <script type="text/x-red" data-template-name="box">
-
     <div class="form-row">
         <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
         <input type="select" id="node-input-scene" placeholder="Scene"/>
     </div>
-
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <input type="text" id="node-input-name_conf_a" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-size_conf_n"><i class="icon-tag"></i> Size</label>
+        <input type="text" id="node-input-size_conf_n"/>
+    </div>  
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-height_conf_n"><i class="icon-tag"></i> Height</label>
+        <input type="text" id="node-input-height_conf_n"/>
+    </div>  
+    <div class="form-row">
+        <label for="node-input-width_conf_n"><i class="icon-tag"></i> Width</label>
+        <input type="text" id="node-input-width_conf_n"/>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-depth_conf_n"><i class="icon-tag"></i> Depth</label>
+        <input type="text" id="node-input-depth_conf_n"/>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
+        <input type="text" id="node-input-sideOrientation_conf_a">
+    </div>        
 </script>
 
 <script type="text/x-red" data-help-name="box">
