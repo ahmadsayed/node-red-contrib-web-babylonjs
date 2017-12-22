@@ -1,6 +1,5 @@
 /**
- * Initial function look trying to make generic function to convert a config to babylonjs parameters
- * instead of making mapping for each components, I use the config directly and remove node-red specific parameters
+ * configuration is config parameter consist of name_config_(n|a)
  * @param {*} config 
  */
 module.exports.getParameters = function (config) {
