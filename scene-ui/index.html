@@ -48,6 +48,9 @@
                     case 'box':
                         var box = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                         break;
+                    case 'plane':
+                        var plan = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
+                        break;
                 }
             });
             

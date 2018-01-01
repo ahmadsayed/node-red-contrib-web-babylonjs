@@ -4,7 +4,8 @@
     "nodes": {
       "sphere": "sphere.js",
       "box": "box.js",
-      "scene": "scene.js"
+      "scene": "scene.js",
+      "plane": "plane.js"
     }
   },
   "dependencies": {

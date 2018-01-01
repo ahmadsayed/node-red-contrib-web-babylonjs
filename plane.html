@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('box',{
+    RED.nodes.registerType('plane',{
         category: '3D',
         color: '#D8BFD8',
         defaults: {
@@ -15,12 +15,12 @@
         inputs:1,
         icon: "babylon.png",
         label: function() {
-            return this.name||"box";
+            return this.name||"plane";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="box">
+<script type="text/x-red" data-template-name="plane">
     <div class="form-row">
         <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
         <input type="select" id="node-input-scene" placeholder="Scene"/>
@@ -53,12 +53,13 @@
     <div class="form-row">
         <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
         <select type="text" id="node-input-sideOrientation_conf_a">
-                <option value="0">FRONTSIDE</option>
-                <option value="1">BACKSIDE</option>
-                <option value="2">DOUBLESIDE</option>
-            </select>    </div>        
+            <option value="0">FRONTSIDE</option>
+            <option value="1">BACKSIDE</option>
+            <option value="2">DOUBLESIDE</option>
+        </select>
+    </div>        
 </script>
 
-<script type="text/x-red" data-help-name="box">
-    <p>Create a primitive box object</p>
+<script type="text/x-red" data-help-name="plane">
+    <p>Create a primitive plane object</p>
 </script>
