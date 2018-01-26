@@ -15,3 +15,5 @@ git clone https://github.com/ahmadsayed/node-red-contrib-web-babylonjs.git
 cd node-red-contrib-web-babylonjs
 
 npm link
+
+Then start your node-red, the 3d section will show up and start using it
