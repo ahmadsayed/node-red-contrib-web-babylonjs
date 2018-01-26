@@ -5,11 +5,13 @@
       "sphere": "sphere.js",
       "box": "box.js",
       "scene": "scene.js",
-      "plane": "plane.js"
+      "plane": "plane.js",
+      "ground": "ground.js"
     }
   },
   "dependencies": {
     "express": "^4.16.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "ws": "^4.0.0"
   }
 }

@@ -1,0 +1,51 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ground',{
+        category: '3D',
+        color: '#D8BFD8',
+        defaults: {
+            scene: {value:"", type:"scene"},    
+            name_conf_a: { value: "", required: true },
+            height_conf_n: {},
+            width_conf_n: {},
+            subdivisions_conf_n: {},
+            updatable_conf_b: { value: false },
+        },
+        inputs:1,
+        icon: "babylon.png",
+        label: function() {
+            return this.name||"ground";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ground">
+    <div class="form-row">
+        <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
+        <input type="select" id="node-input-scene" placeholder="Scene"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name_conf_a" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-height_conf_n"><i class="icon-tag"></i> Height</label>
+        <input type="text" id="node-input-height_conf_n"/>
+    </div>  
+    <div class="form-row">
+        <label for="node-input-width_conf_n"><i class="icon-tag"></i> Width</label>
+        <input type="text" id="node-input-width_conf_n"/>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-subdivisions_conf_n"><i class="icon-tag"></i> Subdivisions</label>
+        <input type="text" id="node-input-subdivisions_conf_n"/>
+    </div>    
+</script>
+
+<script type="text/x-red" data-help-name="ground">
+    <p>Create a primitive Ground object</p>
+</script>

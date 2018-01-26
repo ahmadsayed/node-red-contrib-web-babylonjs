@@ -43,13 +43,16 @@
             sceneData.forEach(element => {
                 switch(element.type) {
                     case 'sphere':
-                        var sphere = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
+                        let sphere = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                         break;
                     case 'box':
-                        var box = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
+                        let box = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                         break;
                     case 'plane':
-                        var plan = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
+                        let plan = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
+                        break;
+                    case 'ground':
+                        let ground = BABYLON.MeshBuilder.CreateGround(element.name, element.param, scene);
                         break;
                 }
             });
