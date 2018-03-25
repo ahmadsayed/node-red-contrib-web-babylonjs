@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Homera Node-red 3D</title>
@@ -23,8 +24,43 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
 </head>
+
 <body>
     <canvas id="renderCanvas" touch-action="none"></canvas> //touch-action="none" for best results from PEP
+    <script type="text/javascript">
+        function WebSocketTest() {
+            if ("WebSocket" in window) {
+
+                // Let us open a web socket
+                var ws = new WebSocket("ws://localhost:9091");
+
+                ws.onopen = function () {
+                    // Web Socket is connected, send data using send()
+                    ws.send("Message to send");
+                    console.log("Message to Send");
+                };
+
+                ws.onmessage = function (evt) {
+                    var received_msg = evt.data;
+                    console.log("Message is received...");
+                };
+
+                ws.onclose = function () {
+                    // websocket is closed.
+                    console.log("Connection is closed...");
+                };
+
+                window.onbeforeunload = function (event) {
+                    socket.close();
+                };
+            }
+
+            else {
+                // The browser doesn't support WebSocket
+                alert("WebSocket NOT supported by your Browser!");
+            }
+        }
+    </script>
     <script>
 
         var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
@@ -41,7 +77,7 @@
             var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
             // Add and manipulate meshes in the scene
             sceneData.forEach(element => {
-                switch(element.type) {
+                switch (element.type) {
                     case 'sphere':
                         let sphere = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                         break;
@@ -56,18 +92,18 @@
                         break;
                 }
             });
-            
+
             return scene;
         };
-
+        WebSocketTest();
         /******* Load scene from backend *********/
-        fetch('/sceneServe').then(res=> res.json()).then( res => {
+        fetch('/sceneServe').then(res => res.json()).then(res => {
             //Call the createScene function
             console.log(res);
             var scene = createScene(res);
             engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
-            scene.render();
-        });
+                scene.render();
+            });
 
 
         });

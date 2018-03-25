@@ -1,7 +1,7 @@
 module.exports = function(RED) {
     var path = require("path");
     var express = require("express");
-
+    var transformation = require("./transformation");
     function SceneNode(n) {
         RED.nodes.createNode(this,n);
         this.name = n.name;
@@ -18,6 +18,7 @@ module.exports = function(RED) {
             context.get("object").clear();
             done();
         } )
+        transformation.dispatchTransformation({port: 9091});
    }
     RED.nodes.registerType("scene",SceneNode);
 }

@@ -2,8 +2,6 @@ module.exports = function(RED) {
     let server = RED.server;
     var util = require('./util');
     var componentType = 'sphere';
-    const WebSocket = require('ws');
-    const wss = new WebSocket.Server({ server });
     
     function SphereNode(config) {
         RED.nodes.createNode(this,config);
