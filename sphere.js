@@ -1,6 +1,8 @@
 module.exports = function(RED) {
     let server = RED.server;
     var util = require('./util');
+    var transformation = require("./transformation");
+
     var componentType = 'sphere';
     
     function SphereNode(config) {
@@ -9,9 +11,8 @@ module.exports = function(RED) {
         this.scene.context().get("object").push({'type' : componentType , 'name': config.name, 'param':util.getParameters(config)});
         var node = this;
         node.on('input', function(msg) {
-            //msg.payload = msg.payload.toLowerCase();
             console.log(msg.payload);
-//          node.send(msg);
+            transformation.queue.push(msg.payload);
         });
     }
 

@@ -15,9 +15,7 @@ module.exports = function (RED) {
             res.send(context.get("object"));
         });
         this.on('close', function (removed, done) {
-
             transformation.terminateConnection(() => {
-                console.log('Connection Terminated');
                 context.set("object", []);
                 done();
             });
@@ -25,6 +23,7 @@ module.exports = function (RED) {
 
         })
         transformation.dispatchTransformation({ port: 9099 });
+        
     }
     RED.nodes.registerType("scene", SceneNode);
 }

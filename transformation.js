@@ -14,8 +14,10 @@ function dispatchTransformation (server) {
         let interval = setInterval(function() {
             if(queue.length > 0) {
                 queue.forEach(function(item) {
-                    console.log(item);
-                    wss.send(item);
+                    if (ws.readyState === WebSocket.OPEN) {
+                        console.log(item);
+                        ws.send(JSON.stringify(item));
+                    }
                 });
                 // no need to clear the array just reset the index
                 queue.length = 0;
@@ -25,7 +27,6 @@ function dispatchTransformation (server) {
 }
 
 function terminateConnection (cb) {
-    console.log('Terminate');
     wss.close( cb) ;
 }
 module.exports =  {
