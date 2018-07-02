@@ -17,3 +17,9 @@ cd node-red-contrib-web-babylonjs
 npm link
 
 Then start your node-red, the 3d section will show up and start using it
+
+To access the 3D scene from 
+
+```
+http://127.0.0.1:1880/scene
+```
