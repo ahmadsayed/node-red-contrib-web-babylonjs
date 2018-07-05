@@ -8,10 +8,11 @@ module.exports = function(RED) {
     function SphereNode(config) {
         RED.nodes.createNode(this,config);
         this.scene = RED.nodes.getNode(config.scene);
-        this.scene.context().get("object").push({'type' : componentType , 'name': config.name, 'param':util.getParameters(config)});
+        var params = util.getParameters(config);
+        this.scene.context().get("object").push({'type' : componentType , 'name': params.name, 'param':params});
         var node = this;
         node.on('input', function(msg) {
-            console.log(msg.payload);
+            msg.payload.name = params.name;
             transformation.queue.push(msg.payload);
         });
     }
