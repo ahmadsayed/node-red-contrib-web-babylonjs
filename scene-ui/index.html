@@ -30,7 +30,9 @@
     <script type="text/javascript">
         var scene;
         function connectToWs() {
+
             var ws;
+            console.log ("============== Establish Connection ============")
             if ("WebSocket" in window) {
                 // Let us open a web socket
                 ws = new WebSocket("ws://localhost:9099");
@@ -105,7 +107,7 @@
             if ( ws.readyState  === WebSocket.CLOSED) {
                 ws  = connectToWs();
             }
-        }, 1000);
+        }, 2000);
         /******* Load scene from backend *********/
         fetch('/sceneServe').then(res => res.json()).then(res => {
             var scene = createScene(res);

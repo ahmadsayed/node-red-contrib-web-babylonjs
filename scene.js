@@ -12,9 +12,11 @@ module.exports = function (RED) {
         context.set("object", []);
         // To serve rest service that provide the html with the list of component
         RED.httpNode.use("/sceneServe", function (req, res) {
+            console.log("Request Resources");
             res.send(context.get("object"));
         });
         this.on('close', function (removed, done) {
+            console.log("Terminate Connection");
             transformation.terminateConnection(() => {
                 context.set("object", []);
                 done();
@@ -22,6 +24,7 @@ module.exports = function (RED) {
 
 
         })
+        console.log("Dispatch Transformation");
         transformation.dispatchTransformation({ port: 9099 });
         
     }
