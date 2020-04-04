@@ -23,3 +23,8 @@ To access the 3D scene from
 ```
 http://127.0.0.1:1880/scene
 ```
+# Windows user
+
+``` 
+run.bat
+```
