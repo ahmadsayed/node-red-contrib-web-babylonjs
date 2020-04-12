@@ -1,7 +1,13 @@
 {
   "name": "node-red-contrib-web-babylonjs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Realize an IoT project with 3D objects, it is in very early stage, The aim of this project is build augemented reality nodes, for visualizing IoT real data in Realtim",
+  "keywords": [
+    "node-red",
+    "3D",
+    "Visualization",
+    "Augmented Reality"
+  ],
   "node-red": {
     "nodes": {
       "sphere": "sphere.js",
