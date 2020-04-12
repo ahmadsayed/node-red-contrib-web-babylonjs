@@ -1,4 +1,4 @@
-![Node.js Package](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/workflows/Node.js%20Package/badge.svg)
+![node-red-contrib-web-babylonjs](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/workflows/node-red-contrib-web-babylonjs/badge.svg)
 
 # node-red-contrib-web-babylonjs
 
