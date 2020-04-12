@@ -1,3 +1,5 @@
+![Node.js Package](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/workflows/Node.js%20Package/badge.svg)
+
 # node-red-contrib-web-babylonjs
 
 Realize an IoT project with 3D objects, it is in very early stage
