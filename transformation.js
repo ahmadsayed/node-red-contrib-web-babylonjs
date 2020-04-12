@@ -13,8 +13,8 @@ function dispatchTransformation (server) {
         ws.on('message', function(message) {
             console.log(message);
         });
+        // Handle Error to avoid crash
         ws.on('error', (error) => {
-            // Handle Error to avoid crash
             console.debug(error)});
         let interval = setInterval(function() {
             if(queue.length > 0) {                
