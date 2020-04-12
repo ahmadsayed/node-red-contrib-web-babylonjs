@@ -20,10 +20,7 @@ function dispatchTransformation (server) {
             console.log(queue.length);
             if(queue.length > 0) {                
                 queue.forEach(function(item) {
-                    console.log(item);
-                    console.log (ws.readyState);
                     if (ws.readyState === WebSocket.OPEN) {
-                        console.log(item);
                         ws.send(JSON.stringify(item));
                         //increment number of consumed message
                         consumed_messages+=1;
