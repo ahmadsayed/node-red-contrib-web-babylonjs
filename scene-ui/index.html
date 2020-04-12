@@ -35,6 +35,7 @@
             console.log ("============== Establish Connection ============")
             if ("WebSocket" in window) {
                 // Let us open a web socket
+                //TODO: Remove localhost
                 ws = new WebSocket("ws://localhost:9099");
                 ws.onopen = function () {
                     // Web Socket is connected, send data using send()

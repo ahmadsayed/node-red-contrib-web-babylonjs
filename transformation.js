@@ -17,7 +17,6 @@ function dispatchTransformation (server) {
             // Handle Error to avoid crash
             console.debug(error)});
         let interval = setInterval(function() {
-            console.log(queue.length);
             if(queue.length > 0) {                
                 queue.forEach(function(item) {
                     if (ws.readyState === WebSocket.OPEN) {
