@@ -2,3 +2,5 @@ node_modules
 .vscode
 package-lock.json
 snapshots
+.nyc_output
+test
