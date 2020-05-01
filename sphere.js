@@ -1,5 +1,4 @@
 module.exports = function(RED) {
-    let server = RED.server;
     var util = require('./util');
     var transformation = require("./transformation");
 

@@ -3,7 +3,7 @@
   "version": "0.0.7",
   "description": "Realize an IoT project with 3D objects, it is in very early stage, The aim of this project is build augemented reality nodes, for visualizing IoT real data in Realtim",
   "scripts": {
-    "test": "nyc mocha ./test"
+    "test": "mocha \"test/**/*_spec.js\""
   },
   "keywords": [
     "node-red",
@@ -17,12 +17,9 @@
       "box": "box.js",
       "scene": "scene.js",
       "plane": "plane.js",
-      "ground": "ground.js"
+      "ground": "ground.js",
+      "transform": "transform.js"
     }
-  },
-  "devDependencies": {
-    "mocha": "^5.2.0",
-    "nyc": "^15.0.1"
   },
   "dependencies": {
     "express": "^4.16.2",
@@ -30,5 +27,11 @@
     "ws": "^4.0.0"
   },
   "author": "ahmad.ahmadsayed@gmail.com",
-  "license": "MIT"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "mocha": "^7.1.2",
+    "node-red": "0.20.0",
+    "node-red-node-test-helper": "^0.2.3",
+    "should": "^13.2.3"
+  }
 }

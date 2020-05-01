@@ -1,0 +1,35 @@
+<script type="text/javascript">
+    RED.nodes.registerType('transform',{
+        category: '3D',
+        color: '#D8BFD8',
+        defaults: {
+            name: {value:"position", required: true}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "babylon.png",
+        label: function() {
+            return this.name||"transform";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="transform">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <select type="text" id="node-input-name">
+                <option value="position">position</option>
+                <option value="rotate">rotate</option>
+                <option value="scale">scale</option>
+        </select>    
+    </div>
+</script>
+
+<script type="text/html" data-help-name="transform">
+    <p>A node to identify transformation Type </p>
+    <ul>
+        <li>position</li>
+        <li>rotate</li>
+        <li>scale</li>
+    </ul>
+</script>

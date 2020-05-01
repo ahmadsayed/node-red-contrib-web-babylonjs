@@ -32,7 +32,7 @@
         function connectToWs() {
 
             var ws;
-            console.log ("============== Establish Connection ============")
+            console.log("============== Establish Connection ============")
             if ("WebSocket" in window) {
                 // Let us open a web socket
                 //TODO: Remove localhost
@@ -45,7 +45,7 @@
 
                 ws.onmessage = function (evt) {
                     var received_msg = JSON.parse(evt.data);
-                    let mesh = scene.getMeshByName(received_msg.name);                    
+                    let mesh = scene.getMeshByName(received_msg.name);
                     mesh.position.x = received_msg.x;
                     mesh.position.y = received_msg.y;
                     mesh.position.z = received_msg.z;
@@ -73,7 +73,7 @@
         var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
         var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
         /******* Add the create scene function ******/
-        var createScene = function (sceneData) {
+        var createScene = function () {
             // Create the scene space
             scene = new BABYLON.Scene(engine);
             // Add a camera to the scene and attach it to the canvas
@@ -82,6 +82,11 @@
             // Add lights to the scene
             var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
             var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
+
+            return scene;
+        };
+
+        var drawMeshes = function (scene, sceneData) {
             // Add and manipulate meshes in the scene
             sceneData.forEach(element => {
                 switch (element.type) {
@@ -99,25 +104,30 @@
                         break;
                 }
             });
-
-            return scene;
         };
         /********** Connect/Reconnect with Heartbeat ****/
         var ws = connectToWs();
-        setInterval(()=> {
-            if ( ws.readyState  === WebSocket.CLOSED) {
-                ws  = connectToWs();
+        setInterval(() => {
+            if (ws.readyState === WebSocket.CLOSED) {
+                ws = connectToWs();
             }
         }, 2000);
-        /******* Load scene from backend *********/
-        fetch('/sceneServe').then(res => res.json()).then(res => {
-            var scene = createScene(res);
-            engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
-                scene.render();
+
+        var loadScene = function () {
+            fetch('/sceneServe').then(res => res.json()).then(res => {
+                drawMeshes(scene, res);
+                engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
+                    scene.render();
+                });
+
             });
+        }
 
+        
+        /******* Load scene from backend *********/
+        var scene = createScene();
+        loadScene();
 
-        });
         window.addEventListener("resize", function () { // Watch for browser/canvas resize events
             engine.resize();
         });
