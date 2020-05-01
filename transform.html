@@ -3,7 +3,8 @@
         category: '3D',
         color: '#D8BFD8',
         defaults: {
-            name: {value:"position", required: true}
+            name: {value:"position", required: true},
+            relative: { value: false }
         },
         inputs: 1,
         outputs: 1,
@@ -23,6 +24,11 @@
                 <option value="scale">scale</option>
         </select>    
     </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-relative" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-relative" style="width:70%;">Relative</label>
+    </div>    
 </script>
 
 <script type="text/html" data-help-name="transform">
@@ -32,4 +38,5 @@
         <li>rotate</li>
         <li>scale</li>
     </ul>
+    <p> Relative, by default the transformation is absolute, but with this check box you can make it relative </p>
 </script>

@@ -6,6 +6,7 @@ module.exports = function(RED) {
             msg.payload = 
             {
                 "type": config.name,
+                "relative": config.relative,
                 "values": msg.payload
             };
             node.send(msg);

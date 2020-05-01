@@ -45,10 +45,32 @@
 
                 ws.onmessage = function (evt) {
                     var received_msg = JSON.parse(evt.data);
-                    let mesh = scene.getMeshByName(received_msg.name);
-                    mesh.position.x = received_msg.x;
-                    mesh.position.y = received_msg.y;
-                    mesh.position.z = received_msg.z;
+                    switch (received_msg.type) {
+                        case 'position':
+                            let mesh = scene.getMeshByName(received_msg.name);
+                            if (received_msg.relative) {
+                                mesh.position.x += received_msg.values.x;
+                                mesh.position.y += received_msg.values.y;
+                                mesh.position.z += received_msg.values.z;
+
+                            } else {
+                                mesh.position.x = received_msg.values.x;
+                                mesh.position.y = received_msg.values.y;
+                                mesh.position.z = received_msg.values.z;
+
+                            }
+                            break;
+                        case 'rotate':
+                            console.log("Not yet implemented");
+                            break;
+                        case 'scale':
+                            console.log("Not yet implemented");
+                            break;
+                        case 'reload':
+                            console.log("Reload Recieved");
+                            loadScene();
+                            break;
+                    }
                     console.log("Message is received...");
                 };
 
@@ -67,8 +89,6 @@
             }
             return ws;
         }
-    </script>
-    <script>
 
         var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
         var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
@@ -86,23 +106,32 @@
             return scene;
         };
 
+        var all_meshes = [];
+
         var drawMeshes = function (scene, sceneData) {
+            // Delete all Meshes to support redraw
+            all_meshes.forEach(mesh => {
+                mesh.dispose();
+            });
+
             // Add and manipulate meshes in the scene
             sceneData.forEach(element => {
+                let mesh = null;
                 switch (element.type) {
                     case 'sphere':
-                        let sphere = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
+                        mesh = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                         break;
                     case 'box':
-                        let box = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
+                        mesh = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                         break;
                     case 'plane':
-                        let plan = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
+                        mesh = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
                         break;
                     case 'ground':
-                        let ground = BABYLON.MeshBuilder.CreateGround(element.name, element.param, scene);
+                        mesh = BABYLON.MeshBuilder.CreateGround(element.name, element.param, scene);
                         break;
                 }
+                all_meshes.push(mesh);
             });
         };
         /********** Connect/Reconnect with Heartbeat ****/
@@ -123,7 +152,7 @@
             });
         }
 
-        
+
         /******* Load scene from backend *********/
         var scene = createScene();
         loadScene();

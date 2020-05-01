@@ -26,6 +26,8 @@ module.exports = function (RED) {
         })
         console.log("Dispatch Transformation");
         transformation.dispatchTransformation({ port: 9099 });
+
+        transformation.queue.push({"type": "reload"});
         
     }
     RED.nodes.registerType("scene", SceneNode);
