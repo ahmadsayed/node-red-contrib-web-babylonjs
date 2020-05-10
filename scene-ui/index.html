@@ -39,15 +39,14 @@
                 ws = new WebSocket("ws://localhost:9099");
                 ws.onopen = function () {
                     // Web Socket is connected, send data using send()
-                    ws.send("Message to send");
-                    console.log("Message to Send");
+                    ws.send("Websocket Connected");
                 };
 
                 ws.onmessage = function (evt) {
                     var received_msg = JSON.parse(evt.data);
+                    let mesh = scene.getMeshByName(received_msg.name);
                     switch (received_msg.type) {
                         case 'position':
-                            let mesh = scene.getMeshByName(received_msg.name);
                             if (received_msg.relative) {
                                 mesh.position.x += received_msg.values.x;
                                 mesh.position.y += received_msg.values.y;
@@ -64,7 +63,15 @@
                             console.log("Not yet implemented");
                             break;
                         case 'scale':
-                            console.log("Not yet implemented");
+                            if(received_msg.relative) {
+                                mesh.scaling.x += received_msg.values.x;
+                                mesh.scaling.y += received_msg.values.y;
+                                mesh.scaling.z += received_msg.values.z;
+                            } else {
+                                mesh.scaling.x = received_msg.values.x;
+                                mesh.scaling.y = received_msg.values.y;
+                                mesh.scaling.z = received_msg.values.z;
+                            }
                             break;
                         case 'reload':
                             console.log("Reload Recieved");

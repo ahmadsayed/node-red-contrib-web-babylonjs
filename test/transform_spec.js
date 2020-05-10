@@ -1,6 +1,7 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
 var transformNode = require("../transform.js");
+var sphereNode = require("../sphere.js");
 
 
 helper.init(require.resolve('node-red'));
@@ -27,5 +28,5 @@ describe('transform Node', function () {
             done();
         });
     });
-   
+  
 });

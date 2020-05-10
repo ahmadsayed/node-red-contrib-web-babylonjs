@@ -11,7 +11,7 @@ function dispatchTransformation (server) {
     wss = new WebSocket.Server( server );
     wss.on('connection', function(ws, req) {
         ws.on('message', function(message) {
-            console.log(message);
+            //TODO: Handle recieved message
         });
         // Handle Error to avoid crash
         ws.on('error', (error) => {
