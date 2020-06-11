@@ -17,7 +17,7 @@
       "box": "box.js",
       "scene": "scene.js",
       "plane": "plane.js",
-      "ground": "ground.js",
+      "cone": "cone.js",
       "transform": "transform.js"
     }
   },

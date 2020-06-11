@@ -134,8 +134,8 @@
                     case 'plane':
                         mesh = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
                         break;
-                    case 'ground':
-                        mesh = BABYLON.MeshBuilder.CreateGround(element.name, element.param, scene);
+                    case 'cone':
+                        mesh = BABYLON.MeshBuilder.CreateCylinder(element.name, element.param, scene);
                         break;
                 }
                 all_meshes.push(mesh);

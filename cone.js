@@ -3,7 +3,7 @@ module.exports = function(RED) {
     var transformation = require("./transformation");
     var shape  = require("./shape.js");
 
-    var componentType = 'ground';
+    var componentType = 'cone';
     function GroundNode(config) {
         shape.call(this, config, RED, componentType);
     }
