@@ -1,16 +1,19 @@
 <script type="text/javascript">
-    RED.nodes.registerType('transform',{
+    RED.nodes.registerType('transform', {
         category: '3D',
         color: '#D8BFD8',
         defaults: {
-            name: {value:"position", required: true},
-            relative: { value: false }
+            name: { value: "position", required: true },
+            relative: { value: false },
+            xaxis: { value: "" },
+            yaxis: { value: "" },
+            zaxis: { value: "" }
         },
         inputs: 1,
         outputs: 1,
         icon: "babylon.png",
-        label: function() {
-            return this.name||"transform";
+        label: function () {
+            return this.name || "transform";
         }
     });
 </script>
@@ -29,6 +32,22 @@
         <input type="checkbox" id="node-input-relative" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-relative" style="width:70%;">Relative</label>
     </div>    
+    <div id="transformation-vector">
+        <div class="red-ui-palette-header">
+            <i class="fa fa-angle-down"></i>Transformation Vector</span>
+        </div>
+        <div class="section-content" style="padding:10px 0 0 10px">
+            <div class="form-row">
+                <label for="node-input-xaxis" style="width:5%"><i class="fa fa-tag"></i> X</label>
+                <input type="text" style="width:10%" id="node-input-xaxis">
+                <label for="node-input-yaxis" style="width:5%"><i class="fa fa-tag"></i> Y</label>
+                <input type="text" style="width:10%" id="node-input-yaxis">
+                <label for="node-input-zaxis" style="width:5%"><i class="fa fa-tag"></i> Z</label>
+                <input type="text" style="width:10%" id="node-input-zaxis">
+            </div>
+        </div>
+    </div>
+    
 </script>
 
 <script type="text/html" data-help-name="transform">
