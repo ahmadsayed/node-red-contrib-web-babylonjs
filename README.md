@@ -9,11 +9,16 @@ The aim of this project is build augemented reality nodes, for visualizing IoT r
 
 ![Initial snapshot](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/node-red-3d.png)
 
-# Try it out 
+# Try it 
 
 ![Demo](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/Demo.gif)
 
-# Develop it out
+# Develop it
+
+The core design principle, is to be very easy to use, and try to provide WYSWYG experience, with very minamlist yet powerful UI.
+Also avoid depends only some magical JSON structure, to be injected to make things work as expected.
+For example transform node is added to explicity provide the transformation, also it contains the paramter needed to be passed.
+Still user can replace it with msg.payload.
 
 Install node-red follow https://nodered.org/docs/getting-started/installation
 
