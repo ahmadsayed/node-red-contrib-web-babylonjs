@@ -17,26 +17,28 @@
         }
     });
 </script>
+<script type="text/javascript">
 
+</script>
 <script type="text/html" data-template-name="transform">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <select type="text" id="node-input-name">
+        <select type="text" id="node-input-name" onchange = '(function(){  var nodeInput = document.getElementById("node-input-name");  var positionSection = document.getElementById("position-section");  positionSection.style.display = (nodeInput.value == "position" || nodeInput.value == "scale") ? "block" : "none";})()'>
                 <option value="position">position</option>
                 <option value="rotate">rotate</option>
                 <option value="scale">scale</option>
-        </select>    
+        </select>
     </div>
     <div class="form-row">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-relative" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-relative" style="width:70%;">Relative</label>
-    </div>    
+    </div>
     <div id="transformation-vector">
         <div class="red-ui-palette-header">
             <i class="fa fa-angle-down"></i>Transformation Vector</span>
         </div>
-        <div class="section-content" style="padding:10px 0 0 10px">
+        <div class="section-content" style="padding:10px 0 0 10px" id="position-section">
             <div class="form-row">
                 <label for="node-input-xaxis" style="width:5%"><i class="fa fa-tag"></i> X</label>
                 <input type="text" style="width:10%" id="node-input-xaxis">
@@ -47,7 +49,7 @@
             </div>
         </div>
     </div>
-    
+
 </script>
 
 <script type="text/html" data-help-name="transform">
