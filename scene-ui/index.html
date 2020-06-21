@@ -56,11 +56,18 @@
                                 mesh.position.x = received_msg.values.x;
                                 mesh.position.y = received_msg.values.y;
                                 mesh.position.z = received_msg.values.z;
-
                             }
                             break;
                         case 'rotate':
-                            console.log("Not yet implemented");
+                            if(received_msg.relative) {
+                              mesh.rotation.x += received_msg.values.x;
+                              mesh.rotation.y += received_msg.values.y;
+                              mesh.rotation.z += received_msg.values.z
+                            } else {
+                              mesh.rotation.x = received_msg.values.x;
+                              mesh.rotation.y = received_msg.values.y;
+                              mesh.rotation.z = received_msg.values.z;
+                            }
                             break;
                         case 'scale':
                             if(received_msg.relative) {
@@ -82,7 +89,7 @@
                 };
 
                 ws.onclose = function () {
-                    // websocket is closed.                    
+                    // websocket is closed.
                     console.log("Connection is closed...");
                 };
                 window.onbeforeunload = function (event) {
@@ -97,7 +104,7 @@
             return ws;
         }
 
-        var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
+        var canvas = document.getElementById("renderCanvas"); // Get the canvas element
         var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
         /******* Add the create scene function ******/
         var createScene = function () {

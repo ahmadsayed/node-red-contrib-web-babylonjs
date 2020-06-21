@@ -23,7 +23,8 @@
 <script type="text/html" data-template-name="transform">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <select type="text" id="node-input-name" onchange = '(function(){  var nodeInput = document.getElementById("node-input-name");  var positionSection = document.getElementById("position-section");  positionSection.style.display = (nodeInput.value == "position" || nodeInput.value == "scale") ? "block" : "none";})()'>
+        <!-- This logic was intented to enable for further sophisticated transformation pattern, that require futher different params as of now will use only simple logic !-->
+        <select type="text" id="node-input-name" onchange = '(function(){  var nodeInput = document.getElementById("node-input-name");  var positionSection = document.getElementById("position-section");  positionSection.style.display = (nodeInput.value == "position" || nodeInput.value == "scale" || nodeInput.value == "rotate") ? "block" : "none";})()'>
                 <option value="position">position</option>
                 <option value="rotate">rotate</option>
                 <option value="scale">scale</option>
