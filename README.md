@@ -13,6 +13,11 @@ The aim of this project is build augemented reality nodes, for visualizing IoT r
 
 ![Demo](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/Demo.gif)
 
+# Rotation Yaaay 
+
+![Rotation](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/rotation.gif)
+
+
 # Develop it
 
 The core design principle, is to be very easy to use, and try to provide WYSWYG experience, with very minamlist yet powerful UI.
