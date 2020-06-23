@@ -7,8 +7,9 @@ module.exports = function Shape(config, RED, componentType) {
     var params = util.getParameters(config);
     this.scene.context().get("object").push({ 'type': componentType, 'name': params.name, 'param': params });
     var node = this;
-    node.on('input', function (msg) {
+    node.on('input', function (msg, send, done) {
         msg.payload.name = params.name;
         transformation.queue.push(msg.payload);
+        done();
     });
 }

@@ -3,7 +3,7 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.on('input', function (msg) {
+        node.on('input', function (msg, send, done) {
             if (config.name == "rotate") {
                 msg.payload =
                 {
@@ -29,7 +29,8 @@ module.exports = function (RED) {
                     }
                 };
             }
-            node.send(msg);
+            send(msg);
+            done();
         });
     }
     RED.nodes.registerType("transform", TransformNode);
