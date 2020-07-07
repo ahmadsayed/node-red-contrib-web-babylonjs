@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 var wss ;
 var queue = [];
+var eventQueue = [];
 /**
  * 
  * @param {*} server 
@@ -11,7 +12,7 @@ function dispatchTransformation (server) {
     wss = new WebSocket.Server( server );
     wss.on('connection', function(ws, req) {
         ws.on('message', function(message) {
-            //TODO: Handle recieved message
+            eventQueue.push(message);
         });
         // Handle Error to avoid crash
         ws.on('error', (error) => {
@@ -34,7 +35,7 @@ function dispatchTransformation (server) {
                 queue.length = queue.length - consumed_messages;
                 consumed_messages = 0;
             }
-        }, 100);        
+        }, 50);        
     });  
 }
 
@@ -44,5 +45,6 @@ function terminateConnection (cb) {
 module.exports =  {
     dispatchTransformation, 
     terminateConnection,
-    get queue () {return queue;}
+    get queue () {return queue;},
+    get eventQueue () { return eventQueue;}
 }; 

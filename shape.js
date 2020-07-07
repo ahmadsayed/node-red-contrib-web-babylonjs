@@ -12,4 +12,14 @@ module.exports = function Shape(config, RED, componentType) {
         transformation.queue.push(msg.payload);
         done();
     });
+
+    let interval = setInterval(function() {
+        if(transformation.eventQueue.length > 0) {                
+            transformation.eventQueue.forEach(function(item) {
+                console.log(item);
+                node.send(item);
+            });
+            transformation.eventQueue.length = 0;
+        }
+    }, 50); 
 }
