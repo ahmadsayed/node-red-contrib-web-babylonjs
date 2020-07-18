@@ -13,13 +13,18 @@ module.exports = function Shape(config, RED, componentType) {
         done();
     });
 
-    let interval = setInterval(function() {
-        if(transformation.eventQueue.length > 0) {                
-            transformation.eventQueue.forEach(function(item) {
+    let interval = setInterval(function () {
+        if (transformation.eventQueue.length > 0) {
+            transformation.eventQueue.forEach(function (item) {
                 console.log(item);
-                node.send(item);
+                picked = JSON.parse(item);
+                if (picked.name === params.name) {
+                    node.send(picked);
+                    
+                }
+
             });
             transformation.eventQueue.length = 0;
         }
-    }, 50); 
+    }, 50);
 }

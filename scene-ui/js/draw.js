@@ -9,7 +9,10 @@ function connectToWs() {
         ws = new WebSocket("ws://" + location.host.split(":")[0] + ":9099");
         ws.onopen = function () {
             // Web Socket is connected, send data using send()
-            ws.send("Websocket Connected");
+            status = {
+                status: "Websocket Connected"
+            }
+            ws.send(JSON.stringify(status));
         };
 
         ws.onmessage = function (evt) {
@@ -55,7 +58,6 @@ function connectToWs() {
                     loadScene();
                     break;
             }
-            console.log("Message is received...");
         };
 
         ws.onclose = function () {
@@ -154,7 +156,10 @@ window.addEventListener("click", function () {
     if (pickResult.hit) {
        // pickResult.pickedMesh.name;
         console.log(pickResult.pickedMesh);
-        ws.send(pickResult.pickedMesh.json());
+        picked = {
+            name: pickResult.pickedMesh.name
+        }
+        ws.send(JSON.stringify(picked));
     }
   
 });
