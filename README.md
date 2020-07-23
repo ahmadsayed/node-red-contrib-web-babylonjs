@@ -15,11 +15,12 @@ The aim of this project is build augemented reality nodes, for visualizing IoT r
 
 # Develop it
 
-The following core principle.
+The following core [principles](https://twitter.com/knolleary/status/1275740133975785472).
 
 ![](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/principles.png)
 
 # Hands on
+
 Install node-red follow https://nodered.org/docs/getting-started/installation
 
 git clone https://github.com/ahmadsayed/node-red-contrib-web-babylonjs.git
