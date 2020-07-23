@@ -3,7 +3,8 @@
         category: 'config',
         defaults: {
             name: {value:"default",required:true},
-            configContext: {}
+            configContext: {},
+            overlay: { value: false },
         },
         label: function() {
             return this.name;
@@ -16,4 +17,9 @@
         <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
         <input type="text" id="node-config-input-name">
     </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-config-input-overlay" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-config-input-overlay" style="width:70%;">Overlay</label>
+    </div>    
 </script>

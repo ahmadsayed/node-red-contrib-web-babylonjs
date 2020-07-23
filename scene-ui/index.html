@@ -20,6 +20,20 @@
             height: 100%;
             touch-action: none;
         }
+        #fps {
+                opacity: 0.5;
+                position: absolute;
+                background-color: black;
+                border: 0px;
+                text-align: center;
+                font-size: 16px;
+                color: white;
+                top: 15px;
+                right: 10px;
+                width: 60px;
+                height: 20px;
+                visibility: hidden;
+            }        
     </style>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
@@ -28,7 +42,7 @@
 <body>
     <canvas id="renderCanvas" touch-action="none"></canvas> //touch-action="none" for best results from PEP
     <script src="js/draw.js"></script>
-
+    <div id="fps">0</div>
 </body>
 
 </html>

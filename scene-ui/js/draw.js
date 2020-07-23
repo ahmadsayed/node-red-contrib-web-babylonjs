@@ -94,6 +94,7 @@ var createScene = function () {
 
 var all_meshes = [];
 
+
 var drawMeshes = function (scene, sceneData) {
     // Delete all Meshes to support redraw
     all_meshes.forEach(mesh => {
@@ -101,7 +102,7 @@ var drawMeshes = function (scene, sceneData) {
     });
 
     // Add and manipulate meshes in the scene
-    sceneData.forEach(element => {
+    sceneData.objects.forEach(element => {
         let mesh = null;
         switch (element.type) {
             case 'sphere':
@@ -129,9 +130,21 @@ setInterval(() => {
 }, 2000);
 
 var loadScene = function () {
+
     fetch('/sceneServe').then(res => res.json()).then(res => {
         drawMeshes(scene, res);
+        let divFps = document.getElementById("fps");
+        let overlay = res.overlay;
         engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
+            if (overlay) {
+                divFps.style.visibility = 'visible';
+
+                divFps.innerHTML = engine.getFps().toFixed() + " fps";
+            } else {
+                divFps.style.visibility = 'hidden';
+            }
+            
+
             scene.render();
         });
 

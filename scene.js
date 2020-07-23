@@ -10,9 +10,15 @@ module.exports = function (RED) {
         // To serve the view pages
         RED.httpNode.use("/scene", express.static(__dirname + '/scene-ui'));
         context.set("object", []);
+        context.set("overlay", n.overlay);
         // To serve rest service that provide the html with the list of component
         RED.httpNode.use("/sceneServe", function (req, res) {
-            res.send(context.get("object"));
+            resp = {
+                'overlay': context.get("overlay"),
+                objects: context.get("object")
+            }
+            res.send(resp);
+            
         });
         this.on('close', function (removed, done) {
             transformation.terminateConnection(() => {
