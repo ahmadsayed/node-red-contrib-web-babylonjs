@@ -134,16 +134,13 @@ var loadScene = function () {
     fetch('/sceneServe').then(res => res.json()).then(res => {
         drawMeshes(scene, res);
         let divFps = document.getElementById("fps");
-        let overlay = res.overlay;
         engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
-            if (overlay) {
+            if (res.overlay) {
                 divFps.style.visibility = 'visible';
-
                 divFps.innerHTML = engine.getFps().toFixed() + " fps";
             } else {
                 divFps.style.visibility = 'hidden';
-            }
-            
+            }           
 
             scene.render();
         });
