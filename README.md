@@ -19,6 +19,8 @@ The following core [principles](https://twitter.com/knolleary/status/12757401339
 
 ![](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/principles.png)
 
+
+
 # Hands on
 
 Install node-red follow https://nodered.org/docs/getting-started/installation
@@ -36,6 +38,10 @@ To access the 3D scene from
 ```
 http://127.0.0.1:1880/scene
 ```
+
+## Live Hacking on [Twitch](https://www.twitch.tv/ahmadsayed1983)
+
+
 # Windows user
 
 ``` 
