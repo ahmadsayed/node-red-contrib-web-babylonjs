@@ -7,11 +7,11 @@ Realize an IoT project with 3D objects, it is in very early stage
 
 The aim of this project is build augemented reality nodes, for visualizing IoT real data in Realtime
 
-![Rotation](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/rotation.gif)
+![Rotation](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/rotation.gif?raw=true)
 
 # Try it 
 
-![Demo](https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/blob/master/snapshots/Demo.gif)
+![Demo](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/Demo.gif)
 
 # Develop it
 
