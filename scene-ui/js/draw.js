@@ -101,6 +101,8 @@ var drawMeshes = function (scene, sceneData) {
         mesh.dispose();
     });
 
+    materialMap = new Map();
+
     // Add and manipulate meshes in the scene
     sceneData.objects.forEach(element => {
         let mesh = null;
@@ -118,6 +120,14 @@ var drawMeshes = function (scene, sceneData) {
                 mesh = BABYLON.MeshBuilder.CreateCylinder(element.name, element.param, scene);
                 break;
         }
+        if (!materialMap.has(element.material.name)) {
+            let mat = new BABYLON.StandardMaterial(element.material.name, scene);
+            mat.diffuseColor = new BABYLON.Color3(element.material.diffuse.r, element.material.diffuse.g, element.material.diffuse.b);
+            mat.alpha = element.material.alpha;
+            materialMap.set(element.material.name, mat);
+        }
+        mesh.material = materialMap.get(element.material.name);
+
         all_meshes.push(mesh);
     });
 };
@@ -140,7 +150,7 @@ var loadScene = function () {
                 divFps.innerHTML = engine.getFps().toFixed() + " fps";
             } else {
                 divFps.style.visibility = 'hidden';
-            }           
+            }
 
             scene.render();
         });
@@ -164,13 +174,13 @@ window.addEventListener("click", function () {
     var pickResult = scene.pick(scene.pointerX, scene.pointerY);
     // We try to pick an object
     if (pickResult.hit) {
-       // pickResult.pickedMesh.name;
+        // pickResult.pickedMesh.name;
         console.log(pickResult.pickedMesh);
         picked = {
             name: pickResult.pickedMesh.name
         }
         ws.send(JSON.stringify(picked));
     }
-  
+
 });
 

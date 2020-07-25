@@ -13,9 +13,10 @@
   ],
   "node-red": {
     "nodes": {
+      "scene": "scene.js",
+      "material": "material.js",
       "sphere": "sphere.js",
       "box": "box.js",
-      "scene": "scene.js",
       "plane": "plane.js",
       "cone": "cone.js",
       "transform": "transform.js"

@@ -4,6 +4,7 @@
         color: '#D8BFD8',
         defaults: {
             scene: {value:"", type:"scene"},    
+            material: {value:"", type: "material", required: false},
             name_conf_a: { value: "", required: true },
             size_conf_n: { value: 1 ,validate:RED.validators.number()},
             height_conf_n: {},
@@ -26,6 +27,10 @@
         <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
         <input type="select" id="node-input-scene" placeholder="Scene"/>
     </div>
+    <div class="form-row">
+        <label for="node-input-material"><i class="fa fa-tag"></i>Material</label>
+        <input type="select" id="node-input-material" placeholder="Material"/>
+    </div>    
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name_conf_a" placeholder="Name">

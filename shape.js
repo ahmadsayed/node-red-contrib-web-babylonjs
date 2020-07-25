@@ -4,8 +4,21 @@ var transformation = require("./transformation");
 module.exports = function Shape(config, RED, componentType) {
     RED.nodes.createNode(this, config);
     this.scene = RED.nodes.getNode(config.scene);
+    this.material = RED.nodes.getNode(config.material);
     var params = util.getParameters(config);
-    this.scene.context().get("object").push({ 'type': componentType, 'name': params.name, 'param': params });
+
+    this.scene.context().get("object").push(
+        { 
+            'type': componentType, 
+            'name': params.name, 
+            'param': params,
+            'material' : {
+                name: this.material.name,
+                diffuse: this.material.diffuse,
+                alpha: parseFloat(this.material.alpha),
+            }
+        }
+    );
     var node = this;
     node.on('input', function (msg, send, done) {
         msg.payload.name = params.name;
@@ -16,7 +29,6 @@ module.exports = function Shape(config, RED, componentType) {
     let interval = setInterval(function () {
         if (transformation.eventQueue.length > 0) {
             transformation.eventQueue.forEach(function (item) {
-                console.log(item);
                 picked = JSON.parse(item);
                 if (picked.name === params.name) {
                     node.send(picked);

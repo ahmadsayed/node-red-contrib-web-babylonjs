@@ -4,6 +4,7 @@
         color: '#D8BFD8',
         defaults: {
             scene: { value: "", type: "scene", required: true },
+            material: {value:"", type: "material", required: false},
             name_conf_a: { value: "", required: true },
             segments_conf_n: { value: 32, validate: RED.validators.number() },
             diameter_conf_n: { value: 1, validate: RED.validators.number() },
@@ -28,6 +29,10 @@
     <div class="form-row">
         <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
         <input type="select" id="node-input-scene" placeholder="Scene"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-material"><i class="fa fa-tag"></i>Material</label>
+        <input type="select" id="node-input-material" placeholder="Material"/>
     </div>
     <div class="form-row">
         <label for="node-input-name_conf_a"><i class="icon-tag"></i> Name</label>
