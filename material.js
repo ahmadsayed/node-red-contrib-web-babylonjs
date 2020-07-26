@@ -21,6 +21,10 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, n);
         this.name = n.name;
         this.diffuse = hexToRgb(n.diffuse);
+        if (n.specular != null) {
+            this.specular = hexToRgb(n.specular);
+        }
+        
         this.alpha = n.alpha;
         this.on('close', function (removed, done) {
             done();

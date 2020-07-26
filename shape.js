@@ -15,6 +15,7 @@ module.exports = function Shape(config, RED, componentType) {
             'material' : {
                 name: this.material.name,
                 diffuse: this.material.diffuse,
+                specular: this.material.specular,
                 alpha: parseFloat(this.material.alpha),
             }
         }

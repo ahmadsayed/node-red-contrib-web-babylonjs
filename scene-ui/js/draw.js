@@ -123,6 +123,9 @@ var drawMeshes = function (scene, sceneData) {
         if (!materialMap.has(element.material.name)) {
             let mat = new BABYLON.StandardMaterial(element.material.name, scene);
             mat.diffuseColor = new BABYLON.Color3(element.material.diffuse.r, element.material.diffuse.g, element.material.diffuse.b);
+            if (element.material.specular != null) {
+                mat.specularColor  = new BABYLON.Color3(element.material.specular.r, element.material.specular.g, element.material.specular.b);
+            }
             mat.alpha = element.material.alpha;
             materialMap.set(element.material.name, mat);
         }
