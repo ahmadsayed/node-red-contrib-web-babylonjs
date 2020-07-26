@@ -18,52 +18,99 @@
         icon: "babylon.png",
         label: function() {
             return this.name||"plane";
+        },
+        oneditprepare: function () {
+            function setUpSection(sectionId, isExpanded) {
+                var basicSection = $(sectionId);
+                var paletteHeader = basicSection.find('.red-ui-palette-header');
+                var twistie = paletteHeader.find('i');
+                var sectionContent = basicSection.find('.section-content');
+
+                function toggleSection(expanded) {
+                    twistie.toggleClass('expanded', expanded);
+                    sectionContent.toggle(expanded);
+                }
+                paletteHeader.on("click", function(e) {
+                    e.preventDefault();
+                    var isExpanded = twistie.hasClass('expanded');
+                    toggleSection(!isExpanded);
+                });
+                toggleSection(isExpanded);
+            }
+            setUpSection('#plane-section-basic', true);
+            setUpSection('#plane-section-parameters', false);
+            setUpSection('#plane-section-initial', false);
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="plane">
-    <div class="form-row">
-        <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
-        <input type="select" id="node-input-scene" placeholder="Scene"/>
-    </div>
-    <div class="form-row">
-        <label for="node-input-material"><i class="fa fa-tag"></i>Material</label>
-        <input type="select" id="node-input-material" placeholder="Material"/>
-    </div>    
+<script type="text/html" data-template-name="plane">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name_conf_a" placeholder="Name">
     </div>
-    <div class="form-row">
-        <label for="node-input-size_conf_n"><i class="icon-tag"></i> Size</label>
-        <input type="text" id="node-input-size_conf_n"/>
-    </div>  
-    <div class="form-row">
-        <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
-    </div>    
-    <div class="form-row">
-        <label for="node-input-height_conf_n"><i class="icon-tag"></i> Height</label>
-        <input type="text" id="node-input-height_conf_n"/>
-    </div>  
-    <div class="form-row">
-        <label for="node-input-width_conf_n"><i class="icon-tag"></i> Width</label>
-        <input type="text" id="node-input-width_conf_n"/>
-    </div>    
-    <div class="form-row">
-        <label for="node-input-depth_conf_n"><i class="icon-tag"></i> Depth</label>
-        <input type="text" id="node-input-depth_conf_n"/>
-    </div>    
-    <div class="form-row">
-        <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
-        <select type="text" id="node-input-sideOrientation_conf_a">
-            <option value="0">FRONTSIDE</option>
-            <option value="1">BACKSIDE</option>
-            <option value="2">DOUBLESIDE</option>
-        </select>
-    </div>        
+  
+    <div id="plane-section-basic">
+        <div class="red-ui-palette-header">
+            <i class="fa fa-angle-down"></i><span>Basic Configuration</span>
+        </div>
+        <div class="section-content" style="padding:10px 0 0 10px">    
+            <div class="form-row">
+                <label for="node-input-scene"><i class="fa fa-tag"></i>Scene</label>
+                <input type="select" id="node-input-scene" placeholder="Scene"/>
+            </div>
+            <div class="form-row">
+                <label for="node-input-material"><i class="fa fa-tag"></i>Material</label>
+                <input type="select" id="node-input-material" placeholder="Material"/>
+            </div>    
+
+            <div class="form-row">
+                <label>&nbsp;</label>
+                <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
+                <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
+            </div>    
+            <div class="form-row">
+                <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
+                <select type="text" id="node-input-sideOrientation_conf_a">
+                    <option value="0">FRONTSIDE</option>
+                    <option value="1">BACKSIDE</option>
+                    <option value="2">DOUBLESIDE</option>
+                </select>
+            </div>  
+        </div>
+    </div>
+
+    <div id="plane-section-parameters">
+        <div class="red-ui-palette-header">
+            <i class="fa fa-angle-down"></i><span>Plane Parameters</span>
+        </div>
+        <div class="section-content" style="padding:10px 0 0 10px">
+            <div class="form-row">
+                <label for="node-input-size_conf_n"><i class="icon-tag"></i> Size</label>
+                <input type="text" id="node-input-size_conf_n"/>
+            </div>      
+            <div class="form-row">
+                <label for="node-input-height_conf_n"><i class="icon-tag"></i> Height</label>
+                <input type="text" id="node-input-height_conf_n"/>
+            </div>  
+            <div class="form-row">
+                <label for="node-input-width_conf_n"><i class="icon-tag"></i> Width</label>
+                <input type="text" id="node-input-width_conf_n"/>
+            </div>    
+            <div class="form-row">
+                <label for="node-input-depth_conf_n"><i class="icon-tag"></i> Depth</label>
+                <input type="text" id="node-input-depth_conf_n"/>
+            </div>
+        </div>
+    </div>
+     
+    <div id="plane-section-initial">
+        <div class="red-ui-palette-header">
+            <i class="fa fa-angle-down"></i><span>Plane Initial</span>
+        </div>
+        <div class="section-content" style="padding:10px 0 0 10px">
+        </div>        
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="plane">
