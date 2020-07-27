@@ -14,7 +14,10 @@
             subdivisions_conf_n: { value: 1, validate: RED.validators.number() },
             arc_conf_n: { value: 1, validate: RED.validators.number() },
             updatable_conf_b: { value: false },
-            sideOrientation_conf_a: { value: "DEFAULTSIDE" }
+            sideOrientation_conf_a: { value: "DEFAULTSIDE" },
+            pos_x: {value: 0},
+            pos_y: {value: 0},
+            pos_z: {value: 0},
         },
         inputs: 1,
         outputs: 1,
@@ -124,6 +127,17 @@
             <i class="fa fa-angle-down"></i><span>Cone Initial</span>
         </div>
         <div class="section-content" style="padding:10px 0 0 10px">
+            <div class="form-row">
+                <p><i class="icon-tag"></i> Position </p>
+            </div>
+            <div style="display:flex; flex-direction: row; justify-content: lef; align-items: center">
+                <label for="node-input-pos_x" style="margin-right: 20px;">X: </label>
+                <input id="node-input-pos_x" type="text" style="width: 60px;margin-right: 30px; "/>
+                <label for="node-input-pos_y" style="margin-right: 20px;">Y: </label>
+                <input id="node-input-pos_y" type="text" style="width: 60px;margin-right: 30px;"/>
+                <label for="node-input-pos_z" style="margin-right: 20px;">Z: </label>
+                <input id="node-input-pos_z" type="text" style="width: 60px"/>
+            </div>            
         </div>        
     </div>
     

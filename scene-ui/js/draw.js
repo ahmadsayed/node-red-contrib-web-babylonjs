@@ -94,6 +94,20 @@ var createScene = function () {
 
 var all_meshes = [];
 
+var applyMaterial = function (scene, material, mesh, /*Map*/ materialMap) {
+    if (!materialMap.has(material.name)) {
+        let mat = new BABYLON.StandardMaterial(material.name, scene);
+        if (material.diffuse != null) {
+            mat.diffuseColor = new BABYLON.Color3(material.diffuse.r,material.diffuse.g, material.diffuse.b);
+        }        
+        if (material.specular != null) {
+            mat.specularColor  = new BABYLON.Color3(material.specular.r, material.specular.g, material.specular.b);
+        }
+        mat.alpha = material.alpha;
+        materialMap.set(material.name, mat);
+    }
+    mesh.material = materialMap.get(material.name);
+}
 
 var drawMeshes = function (scene, sceneData) {
     // Delete all Meshes to support redraw
@@ -120,17 +134,16 @@ var drawMeshes = function (scene, sceneData) {
                 mesh = BABYLON.MeshBuilder.CreateCylinder(element.name, element.param, scene);
                 break;
         }
-        if (!materialMap.has(element.material.name)) {
-            let mat = new BABYLON.StandardMaterial(element.material.name, scene);
-            mat.diffuseColor = new BABYLON.Color3(element.material.diffuse.r, element.material.diffuse.g, element.material.diffuse.b);
-            if (element.material.specular != null) {
-                mat.specularColor  = new BABYLON.Color3(element.material.specular.r, element.material.specular.g, element.material.specular.b);
-            }
-            mat.alpha = element.material.alpha;
-            materialMap.set(element.material.name, mat);
+        if (element.material != null) {
+            applyMaterial(scene, element.material, mesh, materialMap);
         }
-        mesh.material = materialMap.get(element.material.name);
 
+        if (element.position != null) {
+            mesh.position.x = element.position.x;
+            mesh.position.y = element.position.y;
+            mesh.position.z = element.position.z;
+        }
+        
         all_meshes.push(mesh);
     });
 };

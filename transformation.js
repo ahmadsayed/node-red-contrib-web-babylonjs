@@ -1,17 +1,17 @@
 const WebSocket = require('ws');
 const url = require('url');
 
-var wss;
 var queue = [];
 var eventQueue = [];
+var upgraded = false;
 /**
  * 
  * @param {*} server 
  */
-function dispatchTransformation(server) {
+function dispatchTransformation(wss) {
     // This variable used to check the number of consumed message
+
     consumed_messages = 0;
-    wss = new WebSocket.Server({ noServer: true });
     wss.on('connection', function (ws, req) {
         ws.on('message', function (message) {
             eventQueue.push(message);
@@ -40,27 +40,37 @@ function dispatchTransformation(server) {
             }
         }, 50);
     });
-    
+}
+
+function initConnection(server, wss) {
+
     // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from 
     // RED.server
+
     server.on('upgrade', function upgrade(request, socket, head) {
         const pathname = url.parse(request.url).pathname;
 
         if (pathname === '/ws-stream') {
             wss.handleUpgrade(request, socket, head, function done(ws) {
-                wss.emit('connection', ws, request);
+                 wss.emit('connection', ws, request);
             });
+
+        } else {
+            //Do not destroy the socket will stop node-red dashboard
+            //socket.destroy();
         }
     });
-
 }
-
 function terminateConnection(cb) {
-    wss.close(cb);
+    if (wss != null) {
+        wss.close(cb);
+    }
+
 }
 module.exports = {
     dispatchTransformation,
     terminateConnection,
+    initConnection,
     get queue() { return queue; },
     get eventQueue() { return eventQueue; }
 }; 

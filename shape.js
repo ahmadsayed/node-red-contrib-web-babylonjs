@@ -6,13 +6,17 @@ module.exports = function Shape(config, RED, componentType) {
     this.scene = RED.nodes.getNode(config.scene);
     this.material = RED.nodes.getNode(config.material);
     var params = util.getParameters(config);
-
     this.scene.context().get("object").push(
-        { 
-            'type': componentType, 
-            'name': params.name, 
+        {
+            'type': componentType,
+            'name': params.name,
             'param': params,
-            'material' : {
+            'position': {
+                x: config.pos_x,
+                y: config.pos_y,
+                z: config.pos_z
+            },
+            'material': {
                 name: this.material.name,
                 diffuse: this.material.diffuse,
                 specular: this.material.specular,
@@ -30,10 +34,15 @@ module.exports = function Shape(config, RED, componentType) {
     let interval = setInterval(function () {
         if (transformation.eventQueue.length > 0) {
             transformation.eventQueue.forEach(function (item) {
-                picked = JSON.parse(item);
-                if (picked.name === params.name) {
-                    node.send(picked);
-                    
+                try {
+                    picked = JSON.parse(item);
+                    if (picked.name === params.name) {
+                        node.send(picked);
+
+                    }
+
+                } catch (e) {
+
                 }
 
             });
