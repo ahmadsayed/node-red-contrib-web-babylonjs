@@ -1,4 +1,5 @@
 module.exports = function (RED) {
+    var ws = require("ws");
     var path = require("path");
     var express = require("express");
     var transformation = require("./transformation");
@@ -20,6 +21,8 @@ module.exports = function (RED) {
             res.send(resp);
             
         });
+
+    
         this.on('close', function (removed, done) {
             transformation.terminateConnection(() => {
                 context.set("object", []);
@@ -28,7 +31,8 @@ module.exports = function (RED) {
 
 
         })
-        transformation.dispatchTransformation({ port: 9099 });
+
+        transformation.dispatchTransformation(RED.server);
 
         transformation.queue.push({"type": "reload"});
         

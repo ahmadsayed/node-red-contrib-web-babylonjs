@@ -6,7 +6,7 @@ function connectToWs() {
     if ("WebSocket" in window) {
         // Let us open a web socket
         //TODO: Remove localhost
-        ws = new WebSocket("ws://" + location.host.split(":")[0] + ":9099");
+        ws = new WebSocket("ws://" + location.host +"/ws-stream");
         ws.onopen = function () {
             // Web Socket is connected, send data using send()
             status = {

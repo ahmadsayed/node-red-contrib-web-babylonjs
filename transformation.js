@@ -1,30 +1,33 @@
 const WebSocket = require('ws');
-var wss ;
+const url = require('url');
+
+var wss;
 var queue = [];
 var eventQueue = [];
 /**
  * 
  * @param {*} server 
  */
-function dispatchTransformation (server) {
+function dispatchTransformation(server) {
     // This variable used to check the number of consumed message
     consumed_messages = 0;
-    wss = new WebSocket.Server( server );
-    wss.on('connection', function(ws, req) {
-        ws.on('message', function(message) {
+    wss = new WebSocket.Server({ noServer: true });
+    wss.on('connection', function (ws, req) {
+        ws.on('message', function (message) {
             eventQueue.push(message);
         });
         // Handle Error to avoid crash
         ws.on('error', (error) => {
-            console.debug(error)});
-        let interval = setInterval(function() {
-            if(queue.length > 0) {                
-                queue.forEach(function(item) {
+            console.debug(error)
+        });
+        let interval = setInterval(function () {
+            if (queue.length > 0) {
+                queue.forEach(function (item) {
                     if (ws.readyState === WebSocket.OPEN) {
                         ws.send(JSON.stringify(item));
                         //increment number of consumed message
-                        consumed_messages+=1;
-                    } 
+                        consumed_messages += 1;
+                    }
                 });
                 // decrease the length of queue by the number
                 // of consumed messages
@@ -35,16 +38,29 @@ function dispatchTransformation (server) {
                 queue.length = queue.length - consumed_messages;
                 consumed_messages = 0;
             }
-        }, 50);        
-    });  
+        }, 50);
+    });
+    
+    // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from 
+    // RED.server
+    server.on('upgrade', function upgrade(request, socket, head) {
+        const pathname = url.parse(request.url).pathname;
+
+        if (pathname === '/ws-stream') {
+            wss.handleUpgrade(request, socket, head, function done(ws) {
+                wss.emit('connection', ws, request);
+            });
+        }
+    });
+
 }
 
-function terminateConnection (cb) {
-    wss.close( cb) ;
+function terminateConnection(cb) {
+    wss.close(cb);
 }
-module.exports =  {
-    dispatchTransformation, 
+module.exports = {
+    dispatchTransformation,
     terminateConnection,
-    get queue () {return queue;},
-    get eventQueue () { return eventQueue;}
+    get queue() { return queue; },
+    get eventQueue() { return eventQueue; }
 }; 
