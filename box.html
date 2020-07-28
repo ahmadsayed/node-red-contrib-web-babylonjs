@@ -15,6 +15,12 @@
             pos_x: {value: 0},
             pos_y: {value: 0},
             pos_z: {value: 0},
+            scale_x: {value: 1},
+            scale_y: {value: 1},
+            scale_z: {value: 1},
+            rot_x: {value: 0},
+            rot_y: {value: 0},
+            rot_z: {value: 0}
         },
         inputs: 1,
         outputs: 1,
@@ -122,7 +128,31 @@
                 <input id="node-input-pos_y" type="text" style="width: 60px;margin-right: 30px;"/>
                 <label for="node-input-pos_z" style="margin-right: 20px;">Z: </label>
                 <input id="node-input-pos_z" type="text" style="width: 60px"/>
-            </div>            
+            </div>  
+            <br/>
+            <div class="form-row">
+                <p><i class="icon-tag"></i> Scale </p>
+            </div>      
+            <div style="display:flex; flex-direction: row; justify-content: lef; align-items: center">
+                <label for="node-input-scale_x" style="margin-right: 20px;">X: </label>
+                <input id="node-input-scale_x" type="text" style="width: 60px;margin-right: 30px; "/>
+                <label for="node-input-scale_y" style="margin-right: 20px;">Y: </label>
+                <input id="node-input-scale_y" type="text" style="width: 60px;margin-right: 30px;"/>
+                <label for="node-input-scale_z" style="margin-right: 20px;">Z: </label>
+                <input id="node-input-scale_z" type="text" style="width: 60px"/>
+            </div>     
+            <br/>
+            <div class="form-row">
+                <p><i class="icon-tag"></i> Rotation (Degree)</p>
+            </div>      
+            <div style="display:flex; flex-direction: row; justify-content: lef; align-items: center">
+                <label for="node-input-rot_x" style="margin-right: 20px;">X: </label>
+                <input id="node-input-rot_x" type="text" style="width: 60px;margin-right: 30px; "/>
+                <label for="node-input-rot_y" style="margin-right: 20px;">Y: </label>
+                <input id="node-input-rot_y" type="text" style="width: 60px;margin-right: 30px;"/>
+                <label for="node-input-rot_z" style="margin-right: 20px;">Z: </label>
+                <input id="node-input-rot_z" type="text" style="width: 60px"/>
+            </div>                           
         </div>
     </div>  
     

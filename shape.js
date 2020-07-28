@@ -14,7 +14,17 @@ module.exports = function Shape(config, RED, componentType) {
             'position': {
                 x: config.pos_x,
                 y: config.pos_y,
-                z: config.pos_z
+                z: config.pos_z,
+            },
+            'scaling': {
+                x: config.scale_x,
+                y: config.scale_y,
+                z: config.scale_z,
+            },
+            'rotation': {
+                x: (Number(config.rot_x) * Math.PI)/180,
+                y: (Number(config.rot_y) * Math.PI)/180,
+                z: (Number(config.rot_z) * Math.PI)/180,
             },
             'material': {
                 name: this.material.name,

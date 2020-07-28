@@ -143,6 +143,18 @@ var drawMeshes = function (scene, sceneData) {
             mesh.position.y = element.position.y;
             mesh.position.z = element.position.z;
         }
+
+        if (element.rotation != null) {
+            mesh.rotation.x = element.rotation.x;
+            mesh.rotation.y = element.rotation.y;
+            mesh.rotation.z = element.rotation.z;
+        }
+
+        if (element.scaling != null) {
+            mesh.scaling.x = element.scaling.x;
+            mesh.scaling.y = element.scaling.y;
+            mesh.scaling.z = element.scaling.z;
+        }
         
         all_meshes.push(mesh);
     });
