@@ -1,4 +1,5 @@
 var scene;
+
 function connectToWs() {
 
     var ws;
@@ -6,7 +7,7 @@ function connectToWs() {
     if ("WebSocket" in window) {
         // Let us open a web socket
         //TODO: Remove localhost
-        ws = new WebSocket("ws://" + location.host +"/ws-stream");
+        ws = new WebSocket("ws://" + location.host + "/ws-stream");
         ws.onopen = function () {
             // Web Socket is connected, send data using send()
             status = {
@@ -17,46 +18,52 @@ function connectToWs() {
 
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data);
-            let mesh = scene.getMeshByName(received_msg.name);
-            switch (received_msg.type) {
-                case 'position':
-                    if (received_msg.relative) {
-                        mesh.position.x += received_msg.values.x;
-                        mesh.position.y += received_msg.values.y;
-                        mesh.position.z += received_msg.values.z;
+            if (received_msg.type === 'reload') {
+                loadScene();
+            } else {
+                let mesh = scene.getMeshByName(received_msg.name);
+                //Setting Pivote for translation rotation and scaling.
+                pivotAt = new BABYLON.Vector3(received_msg.pivot.x, received_msg.pivot.y, received_msg.pivot.z);
+                //translation = mesh.position.subtract(pivotAt)
+                mesh.setPivotMatrix(BABYLON.Matrix.Translation(pivotAt.x, pivotAt.y, pivotAt.z));
 
-                    } else {
-                        mesh.position.x = received_msg.values.x;
-                        mesh.position.y = received_msg.values.y;
-                        mesh.position.z = received_msg.values.z;
-                    }
-                    break;
-                case 'rotate':
-                    if (received_msg.relative) {
-                        mesh.rotation.x += received_msg.values.x;
-                        mesh.rotation.y += received_msg.values.y;
-                        mesh.rotation.z += received_msg.values.z
-                    } else {
-                        mesh.rotation.x = received_msg.values.x;
-                        mesh.rotation.y = received_msg.values.y;
-                        mesh.rotation.z = received_msg.values.z;
-                    }
-                    break;
-                case 'scale':
-                    if (received_msg.relative) {
-                        mesh.scaling.x += received_msg.values.x;
-                        mesh.scaling.y += received_msg.values.y;
-                        mesh.scaling.z += received_msg.values.z;
-                    } else {
-                        mesh.scaling.x = received_msg.values.x;
-                        mesh.scaling.y = received_msg.values.y;
-                        mesh.scaling.z = received_msg.values.z;
-                    }
-                    break;
-                case 'reload':
-                    console.log("Reload Recieved");
-                    loadScene();
-                    break;
+                switch (received_msg.type) {
+                    case 'position':
+                        if (received_msg.relative) {
+                            mesh.position.x += received_msg.values.x;
+                            mesh.position.y += received_msg.values.y;
+                            mesh.position.z += received_msg.values.z;
+
+                        } else {
+                            mesh.position.x = received_msg.values.x;
+                            mesh.position.y = received_msg.values.y;
+                            mesh.position.z = received_msg.values.z;
+                        }
+                        break;
+                    case 'rotate':     
+                        if (received_msg.relative) {
+                            mesh.rotation.x += received_msg.values.x;
+                            mesh.rotation.y += received_msg.values.y;
+                            mesh.rotation.z += received_msg.values.z
+                        } else {
+                            mesh.rotation.x = received_msg.values.x;
+                            mesh.rotation.y = received_msg.values.y;
+                            mesh.rotation.z = received_msg.values.z;
+                        }
+                        break;
+                    case 'scale':
+                        if (received_msg.relative) {
+                            mesh.scaling.x += received_msg.values.x;
+                            mesh.scaling.y += received_msg.values.y;
+                            mesh.scaling.z += received_msg.values.z;
+                        } else {
+                            mesh.scaling.x = received_msg.values.x;
+                            mesh.scaling.y = received_msg.values.y;
+                            mesh.scaling.z = received_msg.values.z;
+                        }
+                        break;
+                }
+
             }
         };
 
@@ -98,10 +105,10 @@ var applyMaterial = function (scene, material, mesh, /*Map*/ materialMap) {
     if (!materialMap.has(material.name)) {
         let mat = new BABYLON.StandardMaterial(material.name, scene);
         if (material.diffuse != null) {
-            mat.diffuseColor = new BABYLON.Color3(material.diffuse.r,material.diffuse.g, material.diffuse.b);
-        }        
+            mat.diffuseColor = new BABYLON.Color3(material.diffuse.r, material.diffuse.g, material.diffuse.b);
+        }
         if (material.specular != null) {
-            mat.specularColor  = new BABYLON.Color3(material.specular.r, material.specular.g, material.specular.b);
+            mat.specularColor = new BABYLON.Color3(material.specular.r, material.specular.g, material.specular.b);
         }
         mat.alpha = material.alpha;
         materialMap.set(material.name, mat);
@@ -155,7 +162,7 @@ var drawMeshes = function (scene, sceneData) {
             mesh.scaling.y = element.scaling.y;
             mesh.scaling.z = element.scaling.z;
         }
-        
+
         all_meshes.push(mesh);
     });
 };

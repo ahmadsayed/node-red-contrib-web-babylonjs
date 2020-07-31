@@ -5,9 +5,12 @@
         defaults: {
             name: { value: "position", required: true },
             relative: { value: false },
-            xaxis: { value: "" },
-            yaxis: { value: "" },
-            zaxis: { value: "" }
+            xaxis: { value: "", required: true },
+            yaxis: { value: "", required: true },
+            zaxis: { value: "", required: true},
+            pivot_x: {value: 0},
+            pivot_y: {value: 0},
+            pivot_z: {value: 0},
         },
         inputs: 1,
         outputs: 1,
@@ -50,6 +53,21 @@
             </div>
         </div>
     </div>
+    <div id="transformation-vector">
+        <div class="red-ui-palette-header">
+            <i class="fa fa-angle-down"></i>Pivot</span>
+        </div>
+        <div class="section-content" style="padding:10px 0 0 10px" id="position-section">
+            <div class="form-row">
+                <label for="node-input-pivot_x" style="width:5%"><i class="fa fa-tag"></i> X</label>
+                <input type="text" style="width:10%" id="node-input-pivot_x">
+                <label for="node-input-pivot_y" style="width:5%"><i class="fa fa-tag"></i> Y</label>
+                <input type="text" style="width:10%" id="node-input-pivot_y">
+                <label for="node-input-pivot_z" style="width:5%"><i class="fa fa-tag"></i> Z</label>
+                <input type="text" style="width:10%" id="node-input-pivot_z">
+            </div>
+        </div>
+    </div>    
 
 </script>
 
