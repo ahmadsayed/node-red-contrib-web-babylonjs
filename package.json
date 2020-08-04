@@ -19,7 +19,8 @@
       "box": "box.js",
       "plane": "plane.js",
       "cone": "cone.js",
-      "transform": "transform.js"
+      "transform": "transform.js",
+      "events": "events.js"
     }
   },
   "dependencies": {

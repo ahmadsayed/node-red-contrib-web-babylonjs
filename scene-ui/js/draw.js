@@ -41,6 +41,7 @@ function connectToWs() {
                         }
                         break;
                     case 'rotate':     
+                        // Some Strange popping happens when reaching Math.PI, Math.PI/2 , Math.PI/4 (90,180,270), try to do the relative logic in backend
                         if (received_msg.relative) {
                             mesh.rotation.x += received_msg.values.x;
                             mesh.rotation.y += received_msg.values.y;

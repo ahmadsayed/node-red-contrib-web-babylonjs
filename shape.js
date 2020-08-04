@@ -46,17 +46,22 @@ module.exports = function Shape(config, RED, componentType) {
             transformation.eventQueue.forEach(function (item) {
                 try {
                     picked = JSON.parse(item);
+                    if (picked.name == null) {
+                        //Skip any events not related to shape
+                        transformation.eventQueue.length = 0;
+                    }
                     if (picked.name === params.name) {
+                        transformation.eventQueue.length -= 1;
+
                         node.send(picked);
 
                     }
 
                 } catch (e) {
-
+                    console.error(e);
                 }
 
             });
-            transformation.eventQueue.length = 0;
         }
-    }, 50);
+    }, 150);
 }
