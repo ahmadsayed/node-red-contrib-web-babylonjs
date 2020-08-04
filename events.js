@@ -7,5 +7,5 @@ module.exports = function (RED) {
             done();
         });
     }
-    RED.nodes.registerType("events", Eventsode);
+    RED.nodes.registerType("events", EventsNode);
 }
