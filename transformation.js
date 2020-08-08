@@ -3,13 +3,7 @@
 const WebSocket = require('ws');
 const url = require('url');
 const events = require('events');
-
-//TODO: Replace all this shit (queues, busy wait pulling, bla bla ) with Node.JS Events
-var queue = [];
-// event Queue for shape interaction (Pick, Drag, ....) only Pick is implemented
-var eventQueue = []; 
-// event Queue for scene Events  (Keyboard Event)
-var sceneEventQueue = []; 
+const { emitWarning } = require('process');
 
 var emitter = new events.EventEmitter();
 /**
@@ -22,13 +16,10 @@ function dispatchTransformation(wss) {
     consumed_messages = 0;
     wss.on('connection', function (ws, req) {
         ws.on('message', function (message) {
-            if (message.type && message.type == 'click-pick') {
-                eventQueue.push(message);
-            } else {
-                sceneEventQueue.push(message);
-
+            evt = JSON.parse(message);
+            if (evt.type) {
+                emitter.emit(evt.type, evt);                
             }
-
         });
         // Handle Error to avoid crash
         ws.on('error', (error) => {
@@ -39,6 +30,15 @@ function dispatchTransformation(wss) {
             if (ws.readyState == WebSocket.OPEN) {
                 ws.send(JSON.stringify(msg));
             }
+        });
+
+        emitter.on("reload", ()=>{
+            if (ws.readyState == WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                    type: "reload"
+                }));
+            }
+
         });
     });
 }
@@ -72,7 +72,5 @@ module.exports = {
     dispatchTransformation,
     terminateConnection,
     initConnection,
-    get queue() { return queue; },
-    get eventQueue() { return eventQueue; },
     get emitter() { return emitter;}
 }; 

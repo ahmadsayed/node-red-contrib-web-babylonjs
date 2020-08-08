@@ -19,6 +19,7 @@ module.exports = function (RED) {
         context.set("object", []);
         context.set("overlay", n.overlay);
         // To serve rest service that provide the html with the list of component
+        transformation.emitter.setMaxListeners(context.get("object").length * 2);
         RED.httpNode.use("/sceneServe", function (req, res) {
             resp = {
                 'overlay': context.get("overlay"),
@@ -47,7 +48,7 @@ module.exports = function (RED) {
         transformation.dispatchTransformation(n.wss);
 
 
-        transformation.queue.push({ "type": "reload" });
+        transformation.emitter.emit("reload");
 
     }
     RED.nodes.registerType("scene", SceneNode);
