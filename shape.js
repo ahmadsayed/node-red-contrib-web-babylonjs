@@ -37,7 +37,7 @@ module.exports = function Shape(config, RED, componentType) {
     var node = this;
     node.on('input', function (msg, send, done) {
         msg.payload.name = params.name;
-        transformation.queue.push(msg.payload);
+        transformation.emitter.emit("transform", msg.payload);
         done();
     });
 

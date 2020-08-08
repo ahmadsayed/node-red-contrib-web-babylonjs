@@ -97,6 +97,15 @@ var createScene = function () {
     var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
     var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
 
+    scene.onKeyboardObservable.add((kbInfo) => {
+        console.log(kbInfo)
+        eventMsg = {
+            type: (kbInfo.type == 1) ? "keyDown" : "keyUp",
+            key: kbInfo.key
+        }
+        ws.send(JSON.stringify(eventMsg));
+    });
+
     return scene;
 };
 
@@ -213,6 +222,7 @@ window.addEventListener("click", function () {
         // pickResult.pickedMesh.name;
         console.log(pickResult.pickedMesh);
         picked = {
+            type: "click-pick",
             name: pickResult.pickedMesh.name
         }
         ws.send(JSON.stringify(picked));

@@ -1,9 +1,17 @@
+//TODO : Rename this module to be Event manager instead of transformation shit
+
 const WebSocket = require('ws');
 const url = require('url');
+const events = require('events');
 
+//TODO: Replace all this shit (queues, busy wait pulling, bla bla ) with Node.JS Events
 var queue = [];
-var eventQueue = [];
-var upgraded = false;
+// event Queue for shape interaction (Pick, Drag, ....) only Pick is implemented
+var eventQueue = []; 
+// event Queue for scene Events  (Keyboard Event)
+var sceneEventQueue = []; 
+
+var emitter = new events.EventEmitter();
 /**
  * 
  * @param {*} server 
@@ -14,31 +22,24 @@ function dispatchTransformation(wss) {
     consumed_messages = 0;
     wss.on('connection', function (ws, req) {
         ws.on('message', function (message) {
-            eventQueue.push(message);
+            if (message.type && message.type == 'click-pick') {
+                eventQueue.push(message);
+            } else {
+                sceneEventQueue.push(message);
+
+            }
+
         });
         // Handle Error to avoid crash
         ws.on('error', (error) => {
             console.debug(error)
         });
-        let interval = setInterval(function () {
-            if (queue.length > 0) {
-                queue.forEach(function (item) {
-                    if (ws.readyState === WebSocket.OPEN) {
-                        ws.send(JSON.stringify(item));
-                        //increment number of consumed message
-                        consumed_messages += 1;
-                    }
-                });
-                // decrease the length of queue by the number
-                // of consumed messages
-                // This logic is introduced to handle the cases 
-                // when ws.readState not OPEN, the messages skipped
-                // with this logic insure it will be processed 
-                // in the next interation after connection reset
-                queue.length = queue.length - consumed_messages;
-                consumed_messages = 0;
+
+        emitter.on("transform", (msg)=> {
+            if (ws.readyState == WebSocket.OPEN) {
+                ws.send(JSON.stringify(msg));
             }
-        }, 50);
+        });
     });
 }
 
@@ -72,5 +73,6 @@ module.exports = {
     terminateConnection,
     initConnection,
     get queue() { return queue; },
-    get eventQueue() { return eventQueue; }
+    get eventQueue() { return eventQueue; },
+    get emitter() { return emitter;}
 }; 
