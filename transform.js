@@ -13,9 +13,9 @@ module.exports = function (RED) {
                     "type": config.name,
                     "relative": config.relative,
                     "values": {
-                        x: config.xaxis != "" ? ((Number(config.xaxis) * Math.PI)/180) : msg.payload.x,
-                        y: config.yaxis != "" ? ((Number(config.yaxis) * Math.PI)/180) : msg.payload.y,
-                        z: config.zaxis != "" ? ((Number(config.zaxis) * Math.PI)/180) : msg.payload.z
+                        x: msg.payload.x == null ? ((Number(config.xaxis) * Math.PI)/180) : msg.payload.x,
+                        y: msg.payload.y == null ? ((Number(config.yaxis) * Math.PI)/180) : msg.payload.y,
+                        z: msg.payload.z == null ? ((Number(config.zaxis) * Math.PI)/180) : msg.payload.z
                     }
                 };
             } else {
@@ -24,9 +24,9 @@ module.exports = function (RED) {
                     "type": config.name,
                     "relative": config.relative,
                     "values": {
-                        x: config.xaxis != "" ? Number(config.xaxis) : msg.payload.x,
-                        y: config.yaxis != "" ? Number(config.yaxis) : msg.payload.y,
-                        z: config.zaxis != "" ? Number(config.zaxis) : msg.payload.z
+                        x: msg.payload.x == null ? Number(config.xaxis) : msg.payload.x,
+                        y: msg.payload.y == null ? Number(config.yaxis) : msg.payload.y,
+                        z: msg.payload.z == null ? Number(config.zaxis) : msg.payload.z 
                     }
                 };
             }
