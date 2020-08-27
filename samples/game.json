@@ -1,0 +1,319 @@
+[
+    {
+        "id": "9be2e542.cdcb18",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8cbeec03.7f9db",
+        "type": "inject",
+        "z": "9be2e542.cdcb18",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.01",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "3f4371fe.5d1abe"
+            ]
+        ]
+    },
+    {
+        "id": "49edb961.21ffa8",
+        "type": "function",
+        "z": "9be2e542.cdcb18",
+        "name": "",
+        "func": "yPos = flow.get('y');\nrise = flow.get('rise');\nplayerPos = flow.get('playerPos');\nspeed = 0.1;\nif(rise) {\n    if (playerPos < yPos) {\n        playerPos += speed\n    } else {\n        flow.set('rise', false);\n    }\n} else {\n    if (playerPos > 0) {\n        playerPos -= speed;\n    }\n}\nflow.set('playerPos', playerPos)\nmsg.payload = {\n    y: flow.get('playerPos')\n}\n\nenemyX = flow.get('enemyX');\nif (\n    enemyX > 4 && enemyX < 4.5 \n    && \n    playerPos < 1) {\n    flow.set('start', false)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 340,
+        "wires": [
+            [
+                "bbcea837.b261f8"
+            ]
+        ]
+    },
+    {
+        "id": "eee70870.78ef78",
+        "type": "function",
+        "z": "9be2e542.cdcb18",
+        "name": "",
+        "func": "isStarted =flow.get('start')\nif (isStarted) {\n    flow.set('playerPos', 0);\n    flow.set('y',3);\n    flow.set('rise', true);\n} else {\n    flow.set('start', true)\n    flow.set('enemyX', -5)\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\nflow.set('start', false)",
+        "finalize": "",
+        "x": 460,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2423b000.2fc6",
+        "type": "sphere",
+        "z": "9be2e542.cdcb18",
+        "scene": "1a47c7df.1376c8",
+        "material": "f4d76a7f.4cee78",
+        "name_conf_a": "player",
+        "segments_conf_n": 32,
+        "diameter_conf_n": 1,
+        "diameterX_conf_n": "",
+        "diameterY_conf_n": "",
+        "diameterZ_conf_n": "",
+        "arc_conf_n": 1,
+        "slice_conf_n": 1,
+        "updatable_conf_b": false,
+        "sideOrientation_conf_a": "DEFAULTSIDE",
+        "pos_x": "4",
+        "pos_y": 0,
+        "pos_z": 0,
+        "scale_x": 1,
+        "scale_y": 1,
+        "scale_z": 1,
+        "rot_x": 0,
+        "rot_y": 0,
+        "rot_z": 0,
+        "x": 870,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbcea837.b261f8",
+        "type": "transform",
+        "z": "9be2e542.cdcb18",
+        "name": "position",
+        "relative": false,
+        "xaxis": "4",
+        "yaxis": "0",
+        "zaxis": "0",
+        "pivot_x": 0,
+        "pivot_y": 0,
+        "pivot_z": 0,
+        "x": 700,
+        "y": 400,
+        "wires": [
+            [
+                "2423b000.2fc6"
+            ]
+        ]
+    },
+    {
+        "id": "99cc48f5.51e298",
+        "type": "sphere",
+        "z": "9be2e542.cdcb18",
+        "scene": "1a47c7df.1376c8",
+        "material": "361949ad.444986",
+        "name_conf_a": "action",
+        "segments_conf_n": 32,
+        "diameter_conf_n": 1,
+        "diameterX_conf_n": "",
+        "diameterY_conf_n": "",
+        "diameterZ_conf_n": "",
+        "arc_conf_n": 1,
+        "slice_conf_n": 1,
+        "updatable_conf_b": false,
+        "sideOrientation_conf_a": "DEFAULTSIDE",
+        "pos_x": "-4",
+        "pos_y": "4",
+        "pos_z": 0,
+        "scale_x": 1,
+        "scale_y": 1,
+        "scale_z": 1,
+        "rot_x": 0,
+        "rot_y": 0,
+        "rot_z": 0,
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "eee70870.78ef78"
+            ]
+        ]
+    },
+    {
+        "id": "a6accab6.96a628",
+        "type": "cone",
+        "z": "9be2e542.cdcb18",
+        "scene": "1a47c7df.1376c8",
+        "material": "f6ab6adc.879da8",
+        "name_conf_a": "obstacle",
+        "height_conf_n": "1.25",
+        "diameterTop_conf_n": "0",
+        "diameterBottom_conf_n": "0.75",
+        "diameter_conf_n": 1,
+        "tessellation_conf_n": 24,
+        "subdivisions_conf_n": 1,
+        "arc_conf_n": 1,
+        "updatable_conf_b": false,
+        "sideOrientation_conf_a": "DEFAULTSIDE",
+        "pos_x": "-5",
+        "pos_y": "0.15",
+        "pos_z": 0,
+        "scale_x": 1,
+        "scale_y": 1,
+        "scale_z": 1,
+        "rot_x": 0,
+        "rot_y": 0,
+        "rot_z": 0,
+        "x": 860,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2674d15.aecdd",
+        "type": "box",
+        "z": "9be2e542.cdcb18",
+        "scene": "1a47c7df.1376c8",
+        "material": "196ecb61.9cbcf5",
+        "name_conf_a": "land",
+        "size_conf_n": 1,
+        "height_conf_n": "0.1",
+        "width_conf_n": "20",
+        "depth_conf_n": "",
+        "updatable_conf_b": false,
+        "sideOrientation_conf_a": "DEFAULTSIDE",
+        "pos_x": 0,
+        "pos_y": "-0.5",
+        "pos_z": 0,
+        "scale_x": 1,
+        "scale_y": 1,
+        "scale_z": 1,
+        "rot_x": 0,
+        "rot_y": 0,
+        "rot_z": 0,
+        "x": 530,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8c8b404.5cd5a8",
+        "type": "transform",
+        "z": "9be2e542.cdcb18",
+        "name": "position",
+        "relative": false,
+        "xaxis": "0",
+        "yaxis": "0.15",
+        "zaxis": "0",
+        "pivot_x": 0,
+        "pivot_y": 0,
+        "pivot_z": 0,
+        "x": 700,
+        "y": 480,
+        "wires": [
+            [
+                "a6accab6.96a628"
+            ]
+        ]
+    },
+    {
+        "id": "9b121bba.b8eae8",
+        "type": "function",
+        "z": "9be2e542.cdcb18",
+        "name": "",
+        "func": "enemySpeed = 0.04\nenemyX = flow.get('enemyX')\nif (enemyX > 7)  {\n    enemyX = -7\n}\nenemyX += enemySpeed\nflow.set('enemyX', enemyX)\nmsg.payload = {\n    x: enemyX\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\nflow.set('enemyX', -5)",
+        "finalize": "",
+        "x": 520,
+        "y": 540,
+        "wires": [
+            [
+                "d8c8b404.5cd5a8"
+            ]
+        ]
+    },
+    {
+        "id": "3f4371fe.5d1abe",
+        "type": "switch",
+        "z": "9be2e542.cdcb18",
+        "name": "",
+        "property": "start",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 390,
+        "y": 460,
+        "wires": [
+            [
+                "49edb961.21ffa8",
+                "9b121bba.b8eae8"
+            ]
+        ]
+    },
+    {
+        "id": "1a47c7df.1376c8",
+        "type": "scene",
+        "z": "",
+        "name": "scene",
+        "overlay": false
+    },
+    {
+        "id": "f4d76a7f.4cee78",
+        "type": "material",
+        "z": "",
+        "name": "RedMat",
+        "diffuse": "#e84a4a",
+        "alpha": "1"
+    },
+    {
+        "id": "361949ad.444986",
+        "type": "material",
+        "z": "",
+        "name": "yellow",
+        "diffuse": "#dece21",
+        "specular": "#ffffff",
+        "alpha": "1"
+    },
+    {
+        "id": "f6ab6adc.879da8",
+        "type": "material",
+        "z": "",
+        "name": "purple",
+        "diffuse": "#d973d5",
+        "specular": "#ffffff",
+        "alpha": "1"
+    },
+    {
+        "id": "196ecb61.9cbcf5",
+        "type": "material",
+        "z": "",
+        "name": "GreenMat",
+        "diffuse": "#1daf21",
+        "specular": "#000000",
+        "alpha": "1"
+    }
+]
