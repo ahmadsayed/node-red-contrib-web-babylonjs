@@ -47,7 +47,6 @@ function initConnection(server, wss) {
 
     // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from 
     // RED.server
-
     server.on('upgrade', function upgrade(request, socket, head) {
         const pathname = url.parse(request.url).pathname;
 
