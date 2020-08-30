@@ -1,6 +1,8 @@
 //TODO : Rename this module to be Event manager instead of transformation shit
 
-const WebSocket = require('ws');
+//const WebSocket = require('ws');
+var ws = require("ws");
+
 const url = require('url');
 const events = require('events');
 const { emitWarning } = require('process');
@@ -18,7 +20,7 @@ function dispatchTransformation(wss) {
         ws.on('message', function (message) {
             evt = JSON.parse(message);
             if (evt.type) {
-                emitter.emit(evt.type, evt);                
+                emitter.emit(evt.type, evt);
             }
         });
         // Handle Error to avoid crash
@@ -26,14 +28,14 @@ function dispatchTransformation(wss) {
             console.debug(error)
         });
 
-        emitter.on("transform", (msg)=> {
-            if (ws.readyState == WebSocket.OPEN) {
+        emitter.on("transform", (msg) => {
+            if (ws.readyState == ws.OPEN) {
                 ws.send(JSON.stringify(msg));
             }
         });
 
-        emitter.on("reload", ()=>{
-            if (ws.readyState == WebSocket.OPEN) {
+        emitter.on("reload", () => {
+            if (ws.readyState == ws.OPEN) {
                 ws.send(JSON.stringify({
                     type: "reload"
                 }));
@@ -43,27 +45,31 @@ function dispatchTransformation(wss) {
     });
 }
 
-function initConnection(server, wss) {
+var wss = null;
+function initConnection(server) {
 
     // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from 
     // RED.server
+    wss = new ws.Server({ noServer: true });
     server.on('upgrade', function upgrade(request, socket, head) {
         const pathname = url.parse(request.url).pathname;
+            if (pathname === '/ws-stream' && wss != null) {
+                wss.handleUpgrade(request, socket, head, function done(ws) {
+                    wss.emit('connection', ws, request);                    
+                });
 
-        if (pathname === '/ws-stream') {
-            wss.handleUpgrade(request, socket, head, function done(ws) {
-                 wss.emit('connection', ws, request);
-            });
 
         } else {
             //Do not destroy the socket will stop node-red dashboard
             //socket.destroy();
         }
     });
+    dispatchTransformation(wss);
 }
 function terminateConnection(cb) {
     if (wss != null) {
         wss.close(cb);
+        wss = null;
     }
 
 }
@@ -71,5 +77,5 @@ module.exports = {
     dispatchTransformation,
     terminateConnection,
     initConnection,
-    get emitter() { return emitter;}
+    get emitter() { return emitter; }
 }; 

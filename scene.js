@@ -1,7 +1,7 @@
 const { nextTick } = require("process");
 
 module.exports = function (RED) {
-    var ws = require("ws");
+//    var ws = require("ws");
     var path = require("path");
     var express = require("express");
     var transformation = require("./transformation");
@@ -9,7 +9,7 @@ module.exports = function (RED) {
     function SceneNode(n) {
         RED.nodes.createNode(this, n);
         this.name = n.name;
-        n.wss = new ws.Server({ noServer: true });
+      //  n.wss = new ws.Server({ noServer: true });
 
 
         this.sceneObjects = [];
@@ -26,7 +26,6 @@ module.exports = function (RED) {
                 objects: context.get("object")
             }
             res.send(resp);
-
         });
 
 
@@ -35,17 +34,9 @@ module.exports = function (RED) {
         // reload alone works fine, deploy alone works fine, deploy after reload works fine
         this.on('close', function (removed, done) {
             context.set("object", []);
-            done();
-            /*
-            n.wss.close( () => {
-                context.set("object", []);
-                n.closed = true;
-                done();
-            });*/
-
+            done();        
         })
-        transformation.initConnection(RED.server, n.wss);
-        transformation.dispatchTransformation(n.wss);
+        transformation.initConnection(RED.server);
 
 
         transformation.emitter.emit("reload");
