@@ -100,8 +100,9 @@ var createScene = function () {
     scene.onKeyboardObservable.add((kbInfo) => {
         console.log(kbInfo)
         eventMsg = {
-            type: (kbInfo.type == 1) ? "keyDown" : "keyUp",
-            key: kbInfo.key
+            type: kbInfo.event.type,
+            key: kbInfo.event.key,
+            code: kbInfo.event.code
         }
         ws.send(JSON.stringify(eventMsg));
     });
