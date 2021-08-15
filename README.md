@@ -15,6 +15,8 @@ Please check the samples in this below Link for comprehensive that is used durin
 
 https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/tree/master/samples
 
+Note: The Scene node is configuration node, which act the back end to interface with the UI, Only one Scene can exist in flows, insure you deleted all scene nodes before running new flow
+
 
 # Hands on
 
