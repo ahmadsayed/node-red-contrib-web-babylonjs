@@ -46,24 +46,28 @@ function dispatchTransformation(wss) {
 }
 
 var wss = null;
+var serverUpgradeAdded = false
 function initConnection(server) {
 
-    // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from 
+    // Multiple servers sharing a single HTTP/S server, server  is Node-Red Server coming from
     // RED.server
     wss = new ws.Server({ noServer: true });
-    server.on('upgrade', function upgrade(request, socket, head) {
-        const pathname = url.parse(request.url).pathname;
-            if (pathname === '/ws-stream' && wss != null) {
-                wss.handleUpgrade(request, socket, head, function done(ws) {
-                    wss.emit('connection', ws, request);                    
-                });
+    if (!serverUpgradeAdded) {
+        server.on('upgrade', function upgrade(request, socket, head) {
+            const pathname = url.parse(request.url).pathname;
+                if (pathname === '/ws-stream' && wss != null) {
+                    wss.handleUpgrade(request, socket, head, function done(ws) {
+                        wss.emit('connection', ws, request);
+                    });
 
 
-        } else {
-            //Do not destroy the socket will stop node-red dashboard
-            //socket.destroy();
-        }
-    });
+            } else {
+                //Do not destroy the socket will stop node-red dashboard
+                //socket.destroy();
+            }
+        });
+        serverUpgradeAdded = true;
+    }
     dispatchTransformation(wss);
 }
 function terminateConnection(cb) {

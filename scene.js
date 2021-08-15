@@ -5,12 +5,11 @@ module.exports = function (RED) {
     var path = require("path");
     var express = require("express");
     var transformation = require("./transformation");
-
     function SceneNode(n) {
         RED.nodes.createNode(this, n);
         this.name = n.name;
       //  n.wss = new ws.Server({ noServer: true });
-
+        node = this;
 
         this.sceneObjects = [];
         var context = this.context();
@@ -36,6 +35,7 @@ module.exports = function (RED) {
             context.set("object", []);
             done();        
         })
+
         transformation.initConnection(RED.server);
 
 
@@ -44,3 +44,4 @@ module.exports = function (RED) {
     }
     RED.nodes.registerType("scene", SceneNode);
 }
+
