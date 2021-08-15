@@ -15,13 +15,6 @@ Please check the samples in this below Link for comprehensive that is used durin
 
 https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/tree/master/samples
 
-# Develop it
-
-The following core [principles](https://twitter.com/knolleary/status/1275740133975785472).
-
-![](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/principles.png)
-
-
 
 # Hands on
 
