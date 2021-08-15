@@ -11,7 +11,9 @@ The aim of this project is build augemented reality nodes, for visualizing IoT r
 
 # Try it 
 
-![Demo](https://raw.githubusercontent.com/ahmadsayed/node-red-contrib-web-babylonjs/master/snapshots/Demo.gif)
+Please check the samples in this below Link for comprehensive that is used during the development
+
+https://github.com/ahmadsayed/node-red-contrib-web-babylonjs/tree/master/samples
 
 # Develop it
 
