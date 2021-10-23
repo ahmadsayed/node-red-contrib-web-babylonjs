@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+    <title>OpenCV Video Examples - Camera</title>
+</head>
+<body>
+<h1>OpenCV Camera</h1>
+<div>
+    <button id="actionBtn">Start</button>
+</div>
+<video id="video" width="300" height="225"></video>
+
+<img id="inp_img" width="300" height="225" src=/>
+<canvas id="canvasOutput" width="300" height="225"></canvas>
+<p>3D scene</p>
+<canvas id="renderCanvas" width="300" height="225"></canvas>
+<p>3D processed scene</p>
+<canvas id="outputRenderCanvas" width="300" height="225"></canvas>
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+<script async src="opencv.js" type="text/javascript" onload="onCvLoaded();"></script>
+<script>
+var engine, camera
+var createScene = function(engine, canvas) {
+    var scene = new BABYLON.Scene(engine);
+    scene.clearColor = BABYLON.Color3.Green();
+    camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 3, new BABYLON.Vector3(0, 0, 0));
+    camera.attachControl(canvas, true);
+    var redMat = new BABYLON.StandardMaterial("redMat", scene);
+  	redMat.diffuseColor = new BABYLON.Color3(0.7, 0.6, 0.6);
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0));
+
+    const box = BABYLON.MeshBuilder.CreateBox("box", {});
+    box.material = redMat
+  return scene;
+};
+function makeAscene() {
+
+    const canvas = document.getElementById("renderCanvas"); // Get the canvas element
+    engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+    // Add your code here matching the playground format
+
+    const scene = createScene(engine, canvas); //Call the createScene function
+    scene.registerAfterRender(function(){
+      BABYLON.Tools.CreateScreenshot(engine, camera, { width: 300, height: 225 }, function (data) {
+      document.getElementById('inp_img').src = data;
+    });
+  });
+    // Register a render loop to repeatedly render the scene
+    engine.runRenderLoop(function () {
+            scene.render();
+    });
+
+    // Watch for browser/canvas resize events
+    window.addEventListener("resize", function () {
+            engine.resize();
+    });
+
+}
+function onCvLoaded () {
+    console.log('cv', cv);
+    cv.onRuntimeInitialized = onReady;
+}
+const video = document.getElementById('video');
+const actionBtn = document.getElementById('actionBtn');
+const width = 300;
+const height = 225;
+const FPS = 30;
+let stream;
+let streaming = false;
+function onReady () {
+    let src;
+    let dst;
+    makeAscene();
+
+    const cap = new cv.VideoCapture(video);
+
+    actionBtn.addEventListener('click', () => {
+        if (streaming) {
+            stop();
+            actionBtn.textContent = 'Start';
+        } else {
+            start(engine);
+            actionBtn.textContent = 'Stop';
+        }
+    });
+
+    function start () {
+
+
+
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(_stream => {
+            stream = _stream;
+            console.log('stream', stream);
+            video.srcObject = stream;
+            video.play();
+            streaming = true;
+            src = new cv.Mat(height, width, cv.CV_8UC4);
+            dst = new cv.Mat(height, width, cv.CV_8UC1);
+            setTimeout(processVideo, 0)
+        })
+        .catch(err => console.log(`An error occurred: ${err}`));
+    }
+
+    function stop () {
+        if (video) {
+            video.pause();
+            video.srcObject = null;
+        }
+        if (stream) {
+            stream.getVideoTracks()[0].stop();
+        }
+        streaming = false;
+    }
+
+    function processVideo () {
+        if (!streaming) {
+            src.delete();
+            dst.delete();
+            return;
+        }
+        const begin = Date.now();
+        cap.read(src)
+        cv.cvtColor(src, dst, cv.COLOR_BGRA2BGR);
+        cv.imshow('canvasOutput', dst);
+        const delay = 1000/FPS - (Date.now() - begin);
+        setTimeout(processVideo, delay);
+        //let image = cv.imread(document.getElementById('inp_img'));
+        let image_copy  = cv.imread(document.getElementById('inp_img'));
+        //image_copy = cv.cvtColor(image_copy, cv.COLOR_BGR2RGB)
+        cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
+        //cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
+        high = [0, 255, 0]     //[R value, G value, B value]
+        low = [0, 100, 0]
+        const lower_blue = cv.matFromArray(3, 1, cv.CV_64FC1, low);
+        const upper_blue = cv.matFromArray(3, 1, cv.CV_64FC1, high);
+
+        var mask = new cv.Mat();;
+        cv.inRange(image_copy,lower_blue, upper_blue,mask)
+        //plt.imshow(mask, cmap='gray')
+        //const mat = new cv.VideoCapture(re_canvas);
+        // Remove Cube from Video
+        var remove_cube_from_video = new cv.Mat();
+        cv.bitwise_and(dst, dst, remove_cube_from_video, mask);
+
+
+        // Draw the CUBE Only
+        var only_the_cube = new cv.Mat();
+
+        var mask2 = new cv.Mat();
+        cv.threshold(mask, mask2, 70.0, 255.0, cv.THRESH_BINARY_INV);
+        cv.bitwise_and(image_copy, image_copy, only_the_cube, mask2);
+        //mat.delete();
+
+        // bitwise_image_without_cube and the cube only
+        var final_image = new cv.Mat();
+        cv.bitwise_or(remove_cube_from_video, only_the_cube, final_image);
+        cv.imshow('outputRenderCanvas', final_image);
+        mask.delete();
+        mask2.delete();
+        final_image.delete();
+        image_copy.delete();
+        only_the_cube.delete();
+        remove_cube_from_video.delete();
+        lower_blue.delete();
+        upper_blue.delete();
+
+
+    }
+}
+
+</script>
+</body>
+</html>
