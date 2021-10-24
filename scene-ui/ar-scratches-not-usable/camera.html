@@ -8,12 +8,47 @@
 <div>
     <button id="actionBtn">Start</button>
 </div>
-<video id="video" width="300" height="225"></video>
+<table>
+    <tr>
+        <td>
+            <p>Raw Stream from Camera</p>
+            <video id="video" width="300" height="225"></video>
+        </td>
+        <td>
+            <p>Raw Stream converted to HSV</p>
+            <canvas id="canvasOutput" width="300" height="225"></canvas>
+        </td>
+        <td>
+            <p>3D scene</p>
+            <canvas id="renderCanvas" width="300" height="225"></canvas>
+        </td>
+        <td>
+            <p>3D scene rednered Screenshots from Babylon Engine</p>            
+            <img id="inp_img" width="300" height="225"></img>
+        </td>       
+    </tr>
+    <tr>
+        <td>
+            <p>Mask</p>
+            <canvas id="mask" width="300" height="225"></canvas>
+        </td>
+        <td>
+            <p>Inverted Mask</p>            
+            <canvas id="inverted_mask" width="300" height="225"></canvas>
+        </td>
+        <td>
+            <p>Cube after removing the green</p>
+            <canvas id="cube_only" width="300" height="225"></canvas>
+        </td>
+        <td>
+            <p>Video Stream after removing the cube</p>            
+            <canvas id="without_cube" width="300" height="225"></canvas>
+        </td>        
+    </tr>
+</table>
 
-<img id="inp_img" width="300" height="225" src=/>
-<canvas id="canvasOutput" width="300" height="225"></canvas>
-<p>3D scene</p>
-<canvas id="renderCanvas" width="300" height="225"></canvas>
+
+
 <p>3D processed scene</p>
 <canvas id="outputRenderCanvas" width="300" height="225"></canvas>
 <script src="https://cdn.babylonjs.com/babylon.js"></script>
@@ -28,11 +63,18 @@ var createScene = function(engine, canvas) {
     camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 3, new BABYLON.Vector3(0, 0, 0));
     camera.attachControl(canvas, true);
     var redMat = new BABYLON.StandardMaterial("redMat", scene);
-  	redMat.diffuseColor = new BABYLON.Color3(0.7, 0.6, 0.6);
-    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0));
+  	redMat.diffuseColor = new BABYLON.Color3(1.0, 0.0, 0.0);
+    //Adding a light
+    var light2 = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 20, 100), scene);
 
-    const box = BABYLON.MeshBuilder.CreateBox("box", {});
-    box.material = redMat
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0));
+    // The first parameter can be used to specify which mesh to import. Here we import all meshes
+    BABYLON.SceneLoader.ImportMesh("", "./", "skull.babylon", scene, function (newMeshes) {
+        // Set the target of the camera to the first imported mesh
+        camera.target = newMeshes[0];
+    });
+    //const box = BABYLON.MeshBuilder.CreateBox("box", {});
+    //box.material = redMat
   return scene;
 };
 function makeAscene() {
@@ -88,10 +130,6 @@ function onReady () {
     });
 
     function start () {
-
-
-
-
         navigator.mediaDevices.getUserMedia({ video: true, audio: false })
         .then(_stream => {
             stream = _stream;
@@ -129,11 +167,9 @@ function onReady () {
         cv.imshow('canvasOutput', dst);
         const delay = 1000/FPS - (Date.now() - begin);
         setTimeout(processVideo, delay);
-        //let image = cv.imread(document.getElementById('inp_img'));
         let image_copy  = cv.imread(document.getElementById('inp_img'));
         //image_copy = cv.cvtColor(image_copy, cv.COLOR_BGR2RGB)
         cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
-        //cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
         high = [0, 255, 0]     //[R value, G value, B value]
         low = [0, 100, 0]
         const lower_blue = cv.matFromArray(3, 1, cv.CV_64FC1, low);
@@ -147,6 +183,8 @@ function onReady () {
         var remove_cube_from_video = new cv.Mat();
         cv.bitwise_and(dst, dst, remove_cube_from_video, mask);
 
+        cv.imshow('mask', mask);
+        cv.imshow('without_cube', remove_cube_from_video);
 
         // Draw the CUBE Only
         var only_the_cube = new cv.Mat();
@@ -155,6 +193,8 @@ function onReady () {
         cv.threshold(mask, mask2, 70.0, 255.0, cv.THRESH_BINARY_INV);
         cv.bitwise_and(image_copy, image_copy, only_the_cube, mask2);
         //mat.delete();
+        cv.imshow('inverted_mask', mask2);
+        cv.imshow('cube_only', only_the_cube);
 
         // bitwise_image_without_cube and the cube only
         var final_image = new cv.Mat();
