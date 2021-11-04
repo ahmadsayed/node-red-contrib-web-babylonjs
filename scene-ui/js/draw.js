@@ -99,10 +99,12 @@ var createScene = function () {
 
     scene.onKeyboardObservable.add((kbInfo) => {
         console.log(kbInfo)
+        scene_name = window.location.pathname.split('/')[1];
         eventMsg = {
             type: kbInfo.event.type,
             key: kbInfo.event.key,
-            code: kbInfo.event.code
+            code: kbInfo.event.code,
+            scene: scene_name
         }
         ws.send(JSON.stringify(eventMsg));
     });
@@ -186,8 +188,8 @@ setInterval(() => {
 }, 2000);
 
 var loadScene = function () {
-
-    fetch('/sceneServe').then(res => res.json()).then(res => {
+    scene_name = window.location.pathname.split('/')[1];
+    fetch('/sceneServe/'+scene_name).then(res => res.json()).then(res => {
         drawMeshes(scene, res);
         let divFps = document.getElementById("fps");
         engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
