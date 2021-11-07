@@ -33,7 +33,14 @@
                 width: 60px;
                 height: 20px;
                 visibility: hidden;
-            }        
+            }    
+            #video {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%;
+                min-height: 100%;
+            }    
     </style>
 
         <!-- Babylon.js -->
@@ -55,7 +62,9 @@
 </head>
 
 <body>
-    <canvas id="renderCanvas" touch-action="none"></canvas> //touch-action="none" for best results from PEP
+    <canvas id="renderCanvas" touch-action="none" ></canvas>
+    <video id="video" hidden></video>
+
     <script src="js/draw.js"></script>
     <div id="fps">0</div>
 </body>

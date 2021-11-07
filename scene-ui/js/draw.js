@@ -73,7 +73,8 @@ function connectToWs() {
             console.log("Connection is closed...");
         };
         window.onbeforeunload = function (event) {
-            socket.close();
+            if (typeof socket !== 'undefined')
+              socket.close();
         };
     }
 
@@ -86,10 +87,34 @@ function connectToWs() {
 
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
 var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+/******* Capture Camera  ********************/
+const video = document.getElementById('video');
+
+function start () {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    .then(_stream => {
+        stream = _stream;
+        console.log('stream', stream);
+        video.srcObject = stream;
+        video.play();
+        streaming = true;
+        //src = new cv.Mat(height, width, cv.CV_8UC4);
+        //dst = new cv.Mat(height, width, cv.CV_8UC1);
+        //setTimeout(processVideo, 0)
+    })
+    .catch(err => console.log(`An error occurred: ${err}`));
+}
+var captureCamera = function() {
+    start();
+    //const cap = new cv.VideoCapture(video);
+
+}
 /******* Add the create scene function ******/
 var createScene = function () {
+    captureCamera();
     // Create the scene space
     scene = new BABYLON.Scene(engine);
+    scene.clearColor = BABYLON.Color3.Green();
     // Add a camera to the scene and attach it to the canvas
     var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3.Zero(), scene);
     camera.attachControl(canvas, true);
