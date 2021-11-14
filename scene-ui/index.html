@@ -15,23 +15,6 @@
             padding: 0;
         }
 
-        #renderCanvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-
-        #outputRenderCanvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-
-        #inp_img {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
 
         #fps {
             opacity: 0.5;
@@ -80,8 +63,8 @@
             cv.onRuntimeInitialized = onReady;
             onReady();
         }
-        const width = 300;
-        const height = 225;
+        const width = 1280;
+        const height = 720;
         const FPS = 30;
         function onReady() {
             let src;
@@ -117,7 +100,7 @@
                 low = [0, 100, 0]
                 const lower_blue = cv.matFromArray(3, 1, cv.CV_64FC1, low);
                 const upper_blue = cv.matFromArray(3, 1, cv.CV_64FC1, high);
-                
+
                 var mask = new cv.Mat();
                 cv.inRange(image_copy, lower_blue, upper_blue, mask)
                 //plt.imshow(mask, cmap='gray')
@@ -155,12 +138,12 @@
 </head>
 
 <body>
-    <canvas id="renderCanvas" width="300" height="225"  touch-action="none" hidden></canvas>
-    <canvas id="outputRenderCanvas" height="300" width="225"></canvas>
+    <canvas id="renderCanvas" width="1280" height="720" touch-action="none" hidden></canvas>
+    <canvas id="outputRenderCanvas"  width="2048" height="720" > </canvas>
 
-    <video id="video" width="300" height="225"  hidden></video>
+    <video id="video"  width="1280" height="720" hidden></video>
 
-    <img id="inp_img" width="300" height="225" hidden></img>
+    <img id="inp_img"  width="1280" height="720"  hidden></img>
 
     <script src="js/draw.js"></script>
     <div id="fps">0</div>

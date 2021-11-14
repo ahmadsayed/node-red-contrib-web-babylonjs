@@ -38,7 +38,7 @@ function connectToWs() {
                             mesh.position.z = received_msg.values.z;
                         }
                         break;
-                    case 'rotate':     
+                    case 'rotate':
                         // Some Strange popping happens when reaching Math.PI, Math.PI/2 , Math.PI/4 (90,180,270), try to do the relative logic in backend
                         if (received_msg.relative) {
                             mesh.rotation.x += received_msg.values.x;
@@ -72,7 +72,7 @@ function connectToWs() {
         };
         window.onbeforeunload = function (event) {
             if (typeof socket !== 'undefined')
-              socket.close();
+                socket.close();
         };
     }
 
@@ -109,10 +109,10 @@ var createScene = function () {
         }
         ws.send(JSON.stringify(eventMsg));
     });
-    scene.registerAfterRender(function(){
-        BABYLON.Tools.CreateScreenshot(engine, camera, { width: 300, height: 225 }, function (data) {
-        document.getElementById('inp_img').src = data;
-      });
+    scene.registerAfterRender(function () {
+        BABYLON.Tools.CreateScreenshot(engine, camera, { width: 1280, height: 720 }, function (data) {
+            document.getElementById('inp_img').src = data;
+        });
     });
     return scene;
 };
@@ -194,7 +194,7 @@ setInterval(() => {
 
 var loadScene = function () {
     scene_name = window.location.pathname.split('/')[1];
-    fetch('/sceneServe/'+scene_name).then(res => res.json()).then(res => {
+    fetch('/sceneServe/' + scene_name).then(res => res.json()).then(res => {
         drawMeshes(scene, res);
         let divFps = document.getElementById("fps");
         engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
