@@ -1,5 +1,3 @@
-var scene;
-
 function connectToWs() {
 
     var ws;
@@ -88,30 +86,8 @@ function connectToWs() {
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
 var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 /******* Capture Camera  ********************/
-const video = document.getElementById('video');
-
-function start () {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-    .then(_stream => {
-        stream = _stream;
-        console.log('stream', stream);
-        video.srcObject = stream;
-        video.play();
-        streaming = true;
-        //src = new cv.Mat(height, width, cv.CV_8UC4);
-        //dst = new cv.Mat(height, width, cv.CV_8UC1);
-        //setTimeout(processVideo, 0)
-    })
-    .catch(err => console.log(`An error occurred: ${err}`));
-}
-var captureCamera = function() {
-    start();
-    //const cap = new cv.VideoCapture(video);
-
-}
 /******* Add the create scene function ******/
 var createScene = function () {
-    captureCamera();
     // Create the scene space
     scene = new BABYLON.Scene(engine);
     scene.clearColor = BABYLON.Color3.Green();
@@ -133,7 +109,11 @@ var createScene = function () {
         }
         ws.send(JSON.stringify(eventMsg));
     });
-
+    scene.registerAfterRender(function(){
+        BABYLON.Tools.CreateScreenshot(engine, camera, { width: 300, height: 225 }, function (data) {
+        document.getElementById('inp_img').src = data;
+      });
+    });
     return scene;
 };
 

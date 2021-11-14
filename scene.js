@@ -13,6 +13,8 @@ module.exports = function (RED) {
         var context = this.context();
         // To serve the view pages
         RED.httpNode.use("/" + this.name, express.static(__dirname + '/scene-ui'));
+        express.static.mime.define({'application/wasm': ['wasm']});
+
         context.set("object", []);
         context.set("overlay", n.overlay);
         // To serve rest service that provide the html with the list of component

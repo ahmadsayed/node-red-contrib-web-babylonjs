@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Homera Node-red 3D</title>
+    <title>Alhambra Node-red 3D</title>
 
     <style>
         html,
@@ -20,50 +20,147 @@
             height: 100%;
             touch-action: none;
         }
+
+        #outputRenderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        #inp_img {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
         #fps {
-                opacity: 0.5;
-                position: absolute;
-                background-color: black;
-                border: 0px;
-                text-align: center;
-                font-size: 16px;
-                color: white;
-                top: 15px;
-                right: 10px;
-                width: 60px;
-                height: 20px;
-                visibility: hidden;
-            }    
-            #video {
-                position: fixed;
-                right: 0;
-                bottom: 0;
-                min-width: 100%;
-                min-height: 100%;
-            }    
+            opacity: 0.5;
+            position: absolute;
+            background-color: black;
+            border: 0px;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+            top: 15px;
+            right: 10px;
+            width: 60px;
+            height: 20px;
+            visibility: hidden;
+        }
+
+        #video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
     </style>
 
-        <!-- Babylon.js -->
-        <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-        <script src="https://preview.babylonjs.com/ammo.js"></script>
-        <script src="https://preview.babylonjs.com/cannon.js"></script>
-        <script src="https://preview.babylonjs.com/Oimo.js"></script>
-        <script src="https://preview.babylonjs.com/libktx.js"></script>
-        <script src="https://preview.babylonjs.com/earcut.min.js"></script>
-        <script src="https://preview.babylonjs.com/babylon.js"></script>
-        <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-        <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-        <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-        <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-        <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <!-- Babylon.js -->
+    <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/ammo.js"></script>
+    <script src="https://preview.babylonjs.com/cannon.js"></script>
+    <script src="https://preview.babylonjs.com/Oimo.js"></script>
+    <script src="https://preview.babylonjs.com/libktx.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script async src="opencv.js" type="text/javascript" onload="onCvLoaded();"></script>
+    <script>
+        function onCvLoaded() {
+            console.log('cv', cv);
+            cv.onRuntimeInitialized = onReady;
+            onReady();
+        }
+        const width = 300;
+        const height = 225;
+        const FPS = 30;
+        function onReady() {
+            let src;
+            let dst;
+            const video = document.getElementById('video');
+
+            const cap = new cv.VideoCapture(video);
+
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(_stream => {
+                    stream = _stream;
+                    console.log('stream', stream);
+                    video.srcObject = stream;
+                    video.play();
+                    streaming = true;
+                    src = new cv.Mat(height, width, cv.CV_8UC4);
+                    dst = new cv.Mat(height, width, cv.CV_8UC1);
+                    setTimeout(processVideo, 0)
+                })
+                .catch(err => console.log(`An error occurred: ${err}`));
+
+            function processVideo() {
+                cap.read(src)
+                const begin = Date.now();
+
+                cv.cvtColor(src, dst, cv.COLOR_BGRA2BGR);
+                const delay = 1000 / FPS - (Date.now() - begin);
+                setTimeout(processVideo, delay);
+                let image_copy = cv.imread(document.getElementById('inp_img'));
+                //image_copy = cv.cvtColor(image_copy, cv.COLOR_BGR2RGB)
+                cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
+                high = [0, 255, 0]     //[R value, G value, B value]
+                low = [0, 100, 0]
+                const lower_blue = cv.matFromArray(3, 1, cv.CV_64FC1, low);
+                const upper_blue = cv.matFromArray(3, 1, cv.CV_64FC1, high);
+                
+                var mask = new cv.Mat();
+                cv.inRange(image_copy, lower_blue, upper_blue, mask)
+                //plt.imshow(mask, cmap='gray')
+                //const mat = new cv.VideoCapture(re_canvas);
+                // Remove Cube from Video
+                var remove_cube_from_video = new cv.Mat();
+                cv.bitwise_and(dst, dst, remove_cube_from_video, mask);
+
+
+                // Draw the CUBE Only
+                var only_the_cube = new cv.Mat();
+
+                var mask2 = new cv.Mat();
+                cv.threshold(mask, mask2, 70.0, 255.0, cv.THRESH_BINARY_INV);
+                cv.bitwise_and(image_copy, image_copy, only_the_cube, mask2);
+                //mat.delete();
+
+                // bitwise_image_without_cube and the cube only
+                var final_image = new cv.Mat();
+                cv.bitwise_or(remove_cube_from_video, only_the_cube, final_image);
+                cv.imshow('outputRenderCanvas', final_image);
+                mask.delete();
+                mask2.delete();
+                final_image.delete();
+                image_copy.delete();
+                only_the_cube.delete();
+                remove_cube_from_video.delete();
+                lower_blue.delete();
+                upper_blue.delete();
+
+            }
+        }
+    </script>
+
 </head>
 
 <body>
-    <canvas id="renderCanvas" touch-action="none" ></canvas>
-    <video id="video" hidden></video>
+    <canvas id="renderCanvas" width="300" height="225"  touch-action="none" hidden></canvas>
+    <canvas id="outputRenderCanvas" height="300" width="225"></canvas>
+
+    <video id="video" width="300" height="225"  hidden></video>
+
+    <img id="inp_img" width="300" height="225" hidden></img>
 
     <script src="js/draw.js"></script>
     <div id="fps">0</div>
