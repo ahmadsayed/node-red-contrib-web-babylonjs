@@ -35,8 +35,6 @@
             position: fixed;
             right: 0;
             bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
         }
     </style>
 
@@ -63,15 +61,23 @@
             cv.onRuntimeInitialized = onReady;
             onReady();
         }
-        const width = 1280;
-        const height = 720;
+        const width = 1024;
+        const height = 768;
         const FPS = 30;
         function onReady() {
             let src;
             let dst;
+            let image_src;
+            let image_copy;
             const video = document.getElementById('video');
+            const video2 = document.getElementById('video2');
 
             const cap = new cv.VideoCapture(video);
+            const cap2 = new cv.VideoCapture(video2);
+
+
+
+
 
             navigator.mediaDevices.getUserMedia({ video: true, audio: false })
                 .then(_stream => {
@@ -82,20 +88,27 @@
                     streaming = true;
                     src = new cv.Mat(height, width, cv.CV_8UC4);
                     dst = new cv.Mat(height, width, cv.CV_8UC1);
+                    mediaStream =document.getElementById('renderCanvas').captureStream(25);
+
+                    video2.srcObject = mediaStream;
+                    video2.play();
+                    image_src = new cv.Mat(height, width, cv.CV_8UC4);
+                    image_copy = new cv.Mat(height, width, cv.CV_8UC1);
                     setTimeout(processVideo, 0)
                 })
                 .catch(err => console.log(`An error occurred: ${err}`));
 
             function processVideo() {
-                cap.read(src)
+                cap.read(src);
+                cap2.read(image_src);
                 const begin = Date.now();
 
                 cv.cvtColor(src, dst, cv.COLOR_BGRA2BGR);
+                cv.cvtColor(image_src, image_copy, cv.COLOR_BGRA2BGR);
+
                 const delay = 1000 / FPS - (Date.now() - begin);
                 setTimeout(processVideo, delay);
-                let image_copy = cv.imread(document.getElementById('inp_img'));
                 //image_copy = cv.cvtColor(image_copy, cv.COLOR_BGR2RGB)
-                cv.cvtColor(image_copy, image_copy, cv.COLOR_BGRA2BGR);
                 high = [0, 255, 0]     //[R value, G value, B value]
                 low = [0, 100, 0]
                 const lower_blue = cv.matFromArray(3, 1, cv.CV_64FC1, low);
@@ -125,7 +138,7 @@
                 mask.delete();
                 mask2.delete();
                 final_image.delete();
-                image_copy.delete();
+                //image_copy.delete();
                 only_the_cube.delete();
                 remove_cube_from_video.delete();
                 lower_blue.delete();
@@ -138,13 +151,11 @@
 </head>
 
 <body>
-    <canvas id="renderCanvas" width="1280" height="720" touch-action="none" hidden></canvas>
-    <canvas id="outputRenderCanvas"  width="2048" height="720" > </canvas>
+    <canvas id="renderCanvas" width="1024" height="768" touch-action="none" hidden></canvas>
+    <canvas id="outputRenderCanvas"  width="1024" height="768" > </canvas>
 
-    <video id="video"  width="1280" height="720" hidden></video>
-
-    <img id="inp_img"  width="1280" height="720"  hidden></img>
-
+    <video id="video"  width="1024" height="768" hidden></video>
+    <video id="video2"  width="1024" height="768" hidden></video>
     <script src="js/draw.js"></script>
     <div id="fps">0</div>
 </body>

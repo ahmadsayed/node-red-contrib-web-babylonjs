@@ -84,7 +84,7 @@ function connectToWs() {
 }
 
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
-var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true }); // Generate the BABYLON 3D engine
 /******* Capture Camera  ********************/
 /******* Add the create scene function ******/
 var createScene = function () {
@@ -108,11 +108,6 @@ var createScene = function () {
             scene: scene_name
         }
         ws.send(JSON.stringify(eventMsg));
-    });
-    scene.registerAfterRender(function () {
-        BABYLON.Tools.CreateScreenshot(engine, camera, { width: 1280, height: 720 }, function (data) {
-            document.getElementById('inp_img').src = data;
-        });
     });
     return scene;
 };
@@ -181,6 +176,7 @@ var drawMeshes = function (scene, sceneData) {
             mesh.scaling.z = element.scaling.z;
         }
 
+        // Cach mesh in this list in order to dispose
         all_meshes.push(mesh);
     });
 };
