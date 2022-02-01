@@ -75,10 +75,6 @@
             const cap = new cv.VideoCapture(video);
             const cap2 = new cv.VideoCapture(video2);
 
-
-
-
-
             navigator.mediaDevices.getUserMedia({ video: true, audio: false })
                 .then(_stream => {
                     stream = _stream;
