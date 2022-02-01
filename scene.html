@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('scene',{
+    RED.nodes.registerType('3D Scene',{
         category: 'config',
         defaults: {
             name: {value:"default",required:true},
@@ -12,7 +12,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="scene">
+<script type="text/html" data-template-name="3D Scene">
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
         <input type="text" id="node-config-input-name">
@@ -21,5 +21,5 @@
         <label>&nbsp;</label>
         <input type="checkbox" id="node-config-input-overlay" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-config-input-overlay" style="width:70%;">Overlay</label>
-    </div>    
+    </div>
 </script>

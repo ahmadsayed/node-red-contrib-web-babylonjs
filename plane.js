@@ -3,7 +3,7 @@ module.exports = function(RED) {
     var transformation = require("./transformation");
     var shape  = require("./shape.js");
 
-    var componentType = 'plane';
+    var componentType = '3D Plane';
     function PlaneNode(config) {
         shape.call(this, config, RED, componentType);
     }

@@ -71,7 +71,7 @@
     },
     {
         "id": "2423b000.2fc6",
-        "type": "sphere",
+        "type": "3D Sphere",
         "z": "9be2e542.cdcb18",
         "scene": "1a47c7df.1376c8",
         "material": "f4d76a7f.4cee78",
@@ -102,7 +102,7 @@
     },
     {
         "id": "bbcea837.b261f8",
-        "type": "transform",
+        "type": "3D Transform",
         "z": "9be2e542.cdcb18",
         "name": "position",
         "relative": false,
@@ -122,7 +122,7 @@
     },
     {
         "id": "99cc48f5.51e298",
-        "type": "sphere",
+        "type": "3D Sphere",
         "z": "9be2e542.cdcb18",
         "scene": "1a47c7df.1376c8",
         "material": "361949ad.444986",
@@ -155,7 +155,7 @@
     },
     {
         "id": "a6accab6.96a628",
-        "type": "cone",
+        "type": "3D Cone",
         "z": "9be2e542.cdcb18",
         "scene": "1a47c7df.1376c8",
         "material": "f6ab6adc.879da8",
@@ -186,7 +186,7 @@
     },
     {
         "id": "c2674d15.aecdd",
-        "type": "box",
+        "type": "3D Box",
         "z": "9be2e542.cdcb18",
         "scene": "1a47c7df.1376c8",
         "material": "196ecb61.9cbcf5",
@@ -214,7 +214,7 @@
     },
     {
         "id": "d8c8b404.5cd5a8",
-        "type": "transform",
+        "type": "3D Transform",
         "z": "9be2e542.cdcb18",
         "name": "position",
         "relative": false,
@@ -276,14 +276,14 @@
     },
     {
         "id": "1a47c7df.1376c8",
-        "type": "scene",
+        "type": "3D Scene",
         "z": "",
         "name": "scene",
         "overlay": false
     },
     {
         "id": "f4d76a7f.4cee78",
-        "type": "material",
+        "type": "3D Material",
         "z": "",
         "name": "RedMat",
         "diffuse": "#e84a4a",
@@ -291,7 +291,7 @@
     },
     {
         "id": "361949ad.444986",
-        "type": "material",
+        "type": "3D Material",
         "z": "",
         "name": "yellow",
         "diffuse": "#dece21",
@@ -300,7 +300,7 @@
     },
     {
         "id": "f6ab6adc.879da8",
-        "type": "material",
+        "type": "3D Material",
         "z": "",
         "name": "purple",
         "diffuse": "#d973d5",
@@ -309,7 +309,7 @@
     },
     {
         "id": "196ecb61.9cbcf5",
-        "type": "material",
+        "type": "3D Material",
         "z": "",
         "name": "GreenMat",
         "diffuse": "#1daf21",

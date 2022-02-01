@@ -2,8 +2,8 @@ module.exports = function(RED) {
     var util = require('./util');
     var transformation = require("./transformation");
     var shape  = require("./shape.js");
-    var componentType = 'sphere';
-    
+    var componentType = '3D Sphere';
+
     function SphereNode(config) {
         shape.call(this, config, RED, componentType);
     }

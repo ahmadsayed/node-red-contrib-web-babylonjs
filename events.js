@@ -11,5 +11,5 @@ module.exports = function (RED) {
             node.send(evt);
         });
     }
-    RED.nodes.registerType("events", EventsNode);
+    RED.nodes.registerType("3D Events", EventsNode);
 }

@@ -28,12 +28,12 @@ module.exports = function (RED) {
         });
 
 
-        //TODO: Do not close websocket server, for some not yet unexplained behavior in 
+        //TODO: Do not close websocket server, for some not yet unexplained behavior in
         // WS library, when reload screen after deploy  the node-red crash
         // reload alone works fine, deploy alone works fine, deploy after reload works fine
         this.on('close', function (removed, done) {
             context.set("object", []);
-            done();        
+            done();
         })
 
         transformation.initConnection(RED.server);
@@ -42,6 +42,5 @@ module.exports = function (RED) {
         transformation.emitter.emit("reload");
 
     }
-    RED.nodes.registerType("scene", SceneNode);
+    RED.nodes.registerType("3D Scene", SceneNode);
 }
-

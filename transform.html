@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('transform', {
+    RED.nodes.registerType('3D Transform', {
         category: '3D',
         color: '#D8BFD8',
         defaults: {
@@ -23,7 +23,7 @@
 <script type="text/javascript">
 
 </script>
-<script type="text/html" data-template-name="transform">
+<script type="text/html" data-template-name="3D Transform">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <!-- This logic was intented to enable for further sophisticated transformation pattern, that require futher different params as of now will use only simple logic !-->
@@ -67,11 +67,11 @@
                 <input type="text" style="width:10%" id="node-input-pivot_z">
             </div>
         </div>
-    </div>    
+    </div>
 
 </script>
 
-<script type="text/html" data-help-name="transform">
+<script type="text/html" data-help-name="3D Transform">
     <p>A node to identify transformation Type </p>
     <ul>
         <li>position</li>
