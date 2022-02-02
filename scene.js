@@ -13,6 +13,8 @@ module.exports = function (RED) {
         var context = this.context();
         // To serve the view pages
         RED.httpNode.use("/" + this.name, express.static(__dirname + '/scene-ui'));
+        express.static.mime.define({'application/wasm': ['wasm']});
+
         context.set("object", []);
         context.set("overlay", n.overlay);
         // To serve rest service that provide the html with the list of component
@@ -26,12 +28,12 @@ module.exports = function (RED) {
         });
 
 
-        //TODO: Do not close websocket server, for some not yet unexplained behavior in 
+        //TODO: Do not close websocket server, for some not yet unexplained behavior in
         // WS library, when reload screen after deploy  the node-red crash
         // reload alone works fine, deploy alone works fine, deploy after reload works fine
         this.on('close', function (removed, done) {
             context.set("object", []);
-            done();        
+            done();
         })
 
         transformation.initConnection(RED.server);
@@ -40,6 +42,5 @@ module.exports = function (RED) {
         transformation.emitter.emit("reload");
 
     }
-    RED.nodes.registerType("scene", SceneNode);
+    RED.nodes.registerType("3D Scene", SceneNode);
 }
-

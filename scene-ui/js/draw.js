@@ -1,5 +1,3 @@
-var scene;
-
 function connectToWs() {
 
     var ws;
@@ -40,7 +38,7 @@ function connectToWs() {
                             mesh.position.z = received_msg.values.z;
                         }
                         break;
-                    case 'rotate':     
+                    case 'rotate':
                         // Some Strange popping happens when reaching Math.PI, Math.PI/2 , Math.PI/4 (90,180,270), try to do the relative logic in backend
                         if (received_msg.relative) {
                             mesh.rotation.x += received_msg.values.x;
@@ -74,7 +72,7 @@ function connectToWs() {
         };
         window.onbeforeunload = function (event) {
             if (typeof socket !== 'undefined')
-              socket.close();
+                socket.close();
         };
     }
 
@@ -86,32 +84,10 @@ function connectToWs() {
 }
 
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
-var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true }); // Generate the BABYLON 3D engine
 /******* Capture Camera  ********************/
-const video = document.getElementById('video');
-
-function start () {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-    .then(_stream => {
-        stream = _stream;
-        console.log('stream', stream);
-        video.srcObject = stream;
-        video.play();
-        streaming = true;
-        //src = new cv.Mat(height, width, cv.CV_8UC4);
-        //dst = new cv.Mat(height, width, cv.CV_8UC1);
-        //setTimeout(processVideo, 0)
-    })
-    .catch(err => console.log(`An error occurred: ${err}`));
-}
-var captureCamera = function() {
-    start();
-    //const cap = new cv.VideoCapture(video);
-
-}
 /******* Add the create scene function ******/
 var createScene = function () {
-    captureCamera();
     // Create the scene space
     scene = new BABYLON.Scene(engine);
     scene.clearColor = BABYLON.Color3.Green();
@@ -133,7 +109,6 @@ var createScene = function () {
         }
         ws.send(JSON.stringify(eventMsg));
     });
-
     return scene;
 };
 
@@ -166,16 +141,16 @@ var drawMeshes = function (scene, sceneData) {
     sceneData.objects.forEach(element => {
         let mesh = null;
         switch (element.type) {
-            case 'sphere':
+            case '3D Sphere':
                 mesh = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                 break;
-            case 'box':
+            case '3D Box':
                 mesh = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                 break;
-            case 'plane':
+            case '3D Plane':
                 mesh = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
                 break;
-            case 'cone':
+            case '3D Cone':
                 mesh = BABYLON.MeshBuilder.CreateCylinder(element.name, element.param, scene);
                 break;
         }
@@ -201,6 +176,7 @@ var drawMeshes = function (scene, sceneData) {
             mesh.scaling.z = element.scaling.z;
         }
 
+        // Cach mesh in this list in order to dispose
         all_meshes.push(mesh);
     });
 };
@@ -214,7 +190,7 @@ setInterval(() => {
 
 var loadScene = function () {
     scene_name = window.location.pathname.split('/')[1];
-    fetch('/sceneServe/'+scene_name).then(res => res.json()).then(res => {
+    fetch('/sceneServe/' + scene_name).then(res => res.json()).then(res => {
         drawMeshes(scene, res);
         let divFps = document.getElementById("fps");
         engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
@@ -257,4 +233,3 @@ window.addEventListener("click", function () {
     }
 
 });
-

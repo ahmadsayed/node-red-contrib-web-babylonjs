@@ -26,7 +26,7 @@ module.exports = function (RED) {
                     "values": {
                         x: msg.payload.x == null ? Number(config.xaxis) : msg.payload.x,
                         y: msg.payload.y == null ? Number(config.yaxis) : msg.payload.y,
-                        z: msg.payload.z == null ? Number(config.zaxis) : msg.payload.z 
+                        z: msg.payload.z == null ? Number(config.zaxis) : msg.payload.z
                     }
                 };
             }
@@ -39,5 +39,5 @@ module.exports = function (RED) {
             done();
         });
     }
-    RED.nodes.registerType("transform", TransformNode);
+    RED.nodes.registerType("3D Transform", TransformNode);
 }

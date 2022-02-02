@@ -1,10 +1,10 @@
 <script type="text/javascript">
-    RED.nodes.registerType('cone',{
+    RED.nodes.registerType('3D Cone',{
         category: '3D',
         color: '#D8BFD8',
         defaults: {
-            scene: { value: "", type: "scene", required: true },
-            material: {value:"", type: "material", required: false},
+            scene: { value: "", type: "3D Scene", required: true },
+            material: {value:"", type: "3D Material", required: false},
             name_conf_a: { value: "", required: true },
             height_conf_n: { value: 2, validate: RED.validators.number() },
             diameterTop_conf_n: { value: 1, validate: RED.validators.number() },
@@ -29,7 +29,7 @@
         outputs: 1,
         icon: "babylon.png",
         label: function() {
-            return this.name_conf_a||"cone";
+            return this.name_conf_a||"3D Cone";
         },
         oneditprepare: function () {
             function setUpSection(sectionId, isExpanded) {
@@ -56,7 +56,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="cone">
+<script type="text/html" data-template-name="3D Cone">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name_conf_a" placeholder="Name">
@@ -74,12 +74,12 @@
             <div class="form-row">
                 <label for="node-input-material"><i class="fa fa-tag"></i>Material</label>
                 <input type="select" id="node-input-material" placeholder="Material"/>
-            </div> 
+            </div>
             <div class="form-row">
                 <label>&nbsp;</label>
                 <input type="checkbox" id="node-input-updatable_conf_b" style="display:inline-block; width:auto; vertical-align:top;">
                 <label for="node-input-updatable_conf_b" style="width:70%;">Updatable</label>
-            </div>    
+            </div>
             <div class="form-row">
                 <label for="node-input-sideOrientation_conf_a"><i class="icon-tag"></i> SideOrientation</label>
                 <select type="text" id="node-input-sideOrientation_conf_a">
@@ -87,9 +87,9 @@
                     <option value="1">BACKSIDE</option>
                     <option value="2">DOUBLESIDE</option>
                 </select>
-            </div> 
+            </div>
         </div>
-    </div>     
+    </div>
 
     <div id="cone-section-parameters">
         <div class="red-ui-palette-header">
@@ -99,34 +99,34 @@
             <div class="form-row">
                 <label for="node-input-height_conf_n"><i class="icon-tag"></i> Height</label>
                 <input type="text" id="node-input-height_conf_n"/>
-            </div>  
+            </div>
             <div class="form-row">
                 <label for="node-input-diameterTop_conf_n"><i class="icon-tag"></i> Diameter Top</label>
                 <input type="text" id="node-input-diameterTop_conf_n"/>
-            </div>    
+            </div>
             <div class="form-row">
                 <label for="node-input-diameterBottom_conf_n"><i class="icon-tag"></i> Diameter Bottom</label>
                 <input type="text" id="node-input-diameterBottom_conf_n"/>
-            </div> 
+            </div>
 
             <div class="form-row">
                 <label for="node-input-diameter_conf_n"><i class="icon-tag"></i> Diameter</label>
                 <input type="text" id="node-input-diameter_conf_n"/>
-            </div> 
+            </div>
             <div class="form-row">
                 <label for="node-input-tessellation_conf_n"><i class="icon-tag"></i> Tessellation</label>
                 <input type="text" id="node-input-tessellation_conf_n"/>
-            </div> 
+            </div>
             <div class="form-row">
                 <label for="node-input-subdivisions_conf_n"><i class="icon-tag"></i> Subdivisions</label>
                 <input type="text" id="node-input-subdivisions_conf_n"/>
-            </div>    
+            </div>
             <div class="form-row">
                 <label for="node-input-arc_conf_n"><i class="icon-tag"></i> Arc</label>
                 <input type="text" id="node-input-arc_conf_n"/>
-            </div>  
+            </div>
         </div>
-    </div> 
+    </div>
 
     <div id="cone-section-initial">
         <div class="red-ui-palette-header">
@@ -147,7 +147,7 @@
             <br/>
             <div class="form-row">
                 <p><i class="icon-tag"></i> Scale </p>
-            </div>      
+            </div>
             <div style="display:flex; flex-direction: row; justify-content: lef; align-items: center">
                 <label for="node-input-scale_x" style="margin-right: 20px;">X: </label>
                 <input id="node-input-scale_x" type="text" style="width: 60px;margin-right: 30px; "/>
@@ -155,11 +155,11 @@
                 <input id="node-input-scale_y" type="text" style="width: 60px;margin-right: 30px;"/>
                 <label for="node-input-scale_z" style="margin-right: 20px;">Z: </label>
                 <input id="node-input-scale_z" type="text" style="width: 60px"/>
-            </div>     
+            </div>
             <br/>
             <div class="form-row">
                 <p><i class="icon-tag"></i> Rotation (Degree) </p>
-            </div>      
+            </div>
             <div style="display:flex; flex-direction: row; justify-content: lef; align-items: center">
                 <label for="node-input-rot_x" style="margin-right: 20px;">X: </label>
                 <input id="node-input-rot_x" type="text" style="width: 60px;margin-right: 30px; "/>
@@ -167,10 +167,10 @@
                 <input id="node-input-rot_y" type="text" style="width: 60px;margin-right: 30px;"/>
                 <label for="node-input-rot_z" style="margin-right: 20px;">Z: </label>
                 <input id="node-input-rot_z" type="text" style="width: 60px"/>
-            </div>       
+            </div>
         </div>
     </div>
-    
+
 </script>
 
 <script type="text/x-red" data-help-name="cone">

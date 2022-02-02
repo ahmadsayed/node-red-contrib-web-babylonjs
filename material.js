@@ -24,12 +24,12 @@ module.exports = function (RED) {
         if (n.specular != null) {
             this.specular = hexToRgb(n.specular);
         }
-        
+
         this.alpha = n.alpha;
         this.on('close', function (removed, done) {
             done();
         });
 
     }
-    RED.nodes.registerType("material", MaterialNode);
+    RED.nodes.registerType("3D Material", MaterialNode);
 }
