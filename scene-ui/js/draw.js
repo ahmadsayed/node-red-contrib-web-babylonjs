@@ -141,16 +141,16 @@ var drawMeshes = function (scene, sceneData) {
     sceneData.objects.forEach(element => {
         let mesh = null;
         switch (element.type) {
-            case 'sphere':
+            case '3D Sphere':
                 mesh = BABYLON.MeshBuilder.CreateSphere(element.name, element.param, scene);
                 break;
-            case 'box':
+            case '3D Box':
                 mesh = BABYLON.MeshBuilder.CreateBox(element.name, element.param, scene);
                 break;
-            case 'plane':
+            case '3D Plane':
                 mesh = BABYLON.MeshBuilder.CreatePlane(element.name, element.param, scene);
                 break;
-            case 'cone':
+            case '3D Cone':
                 mesh = BABYLON.MeshBuilder.CreateCylinder(element.name, element.param, scene);
                 break;
         }
@@ -233,4 +233,3 @@ window.addEventListener("click", function () {
     }
 
 });
-
